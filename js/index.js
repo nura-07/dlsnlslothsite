@@ -39,7 +39,12 @@
 
   // the rest of the hero leans away as the star warps
   if (hasG && !reduce) {
-    gsap.to('.hero__intro, .hero__index', { y: -80, opacity: 0, filter: 'blur(8px)', ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: '60% top', scrub: true } });
+    // on phones the four words sit low in the hero, so they only leave once they've reached the top of the screen
+    gsap.matchMedia().add({ phone: '(max-width: 760px)', wide: '(min-width: 761px)' }, ({ conditions: c }) => {
+      if (c.wide) { gsap.to('.hero__intro, .hero__index', { y: -80, opacity: 0, filter: 'blur(8px)', ease: 'none', scrollTrigger: { trigger: hero, start: 'top top', end: '60% top', scrub: true } }); return; }
+      gsap.to('.hero__intro', { y: -60, opacity: 0, filter: 'blur(6px)', ease: 'none', scrollTrigger: { trigger: '.hero__intro', start: 'top 12%', end: 'bottom top', scrub: true } });
+      gsap.to('.hero__index', { y: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero__index', start: 'top 15%', end: 'bottom top', scrub: true } });
+    });
     gsap.to('.hero__base', { y: -40, opacity: 0, ease: 'none', scrollTrigger: { trigger: hero, start: '35% top', end: '85% top', scrub: true } });
   }
 
@@ -122,7 +127,7 @@
     ['Transformative Ventures', 'sans', 'transformative'],
     ['Indian Army', 'px', 'indian-army']
   ];
-  const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`;
+  const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${D.SPARK || STAR}"/></svg>`;
   const brandHTML = BRANDS.map(([n, s, f]) => `<span class="bw bw--${s}" data-logo-file="${f}">${star}<span class="bw__name">${n}</span></span>`).join('');
   $('#brands').innerHTML = brandHTML + brandHTML.replace(/class="bw /g, 'aria-hidden="true" class="bw ');
   // When a real logo file is added to assets/logos/, list it here

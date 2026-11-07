@@ -22,7 +22,7 @@
   document.documentElement.style.setProperty('--c', p.accent);
 
   const STAR = D.STAR;
-  const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`;
+  const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${D.SPARK || STAR}"/></svg>`;
   const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg>';
   const back = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>';
   const arrowR = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';

@@ -7,7 +7,7 @@
 (function () {
   const A = (p) => (window.DLSNL ? window.DLSNL.asset(p) : p);
   const img = (n) => A(`assets/herbius/${n}.webp`);
-  const STAR = 'M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z';
+  const STAR = (window.DLSNL && window.DLSNL.SPARK) || 'M50 0L52.6 43.7L71.9 28.1L56.3 47.4L100 50L56.3 52.6L71.9 71.9L52.6 56.3L50 100L47.4 56.3L28.1 71.9L43.7 52.6L0 50L43.7 47.4L28.1 28.1L47.4 43.7Z';
   const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`;
   const plus = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>';
   const LANG = { en: 'English', it: 'Italian', nl: 'Dutch' };

@@ -11,6 +11,8 @@
     ['Behance', 'https://www.behance.net/arundhatimitra']
   ];
   const STAR = 'M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z';
+  // eight-point sparkle for buttons and small accents; STAR stays for big stars and the skies
+  const SPARK = 'M50 0L52.6 43.7L71.9 28.1L56.3 47.4L100 50L56.3 52.6L71.9 71.9L52.6 56.3L50 100L47.4 56.3L28.1 71.9L43.7 52.6L0 50L43.7 47.4L28.1 28.1L47.4 43.7Z';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const hasG = !!window.gsap;
@@ -410,7 +412,7 @@ if (music && sound) {
   }
   if (cur && fine && !reduce) {
     document.documentElement.classList.add('has-cursor');
-    cur.innerHTML = `<span class="cursor__halo"></span><span class="cursor__star"><svg viewBox="0 0 100 100"><path d="${STAR}"/></svg></span><span class="cursor__label"></span>`;
+    cur.innerHTML = `<span class="cursor__halo"></span><span class="cursor__star"><svg viewBox="0 0 100 100"><path d="${SPARK}"/></svg></span><span class="cursor__label"></span>`;
     const lab = $('.cursor__label', cur);
     let x = innerWidth / 2, y = innerHeight / 2, cx = x, cy = y, lx = x, ly = y, lastTrail = 0, ci = 0;
     addEventListener('pointermove', (e) => {
@@ -509,7 +511,7 @@ if (music && sound) {
       if (fine) $$('.ftr__w', say).forEach((w) => w.addEventListener('mouseenter', () => { const r = w.getBoundingClientRect(); sparks(r.left + r.width / 2, r.top + r.height * .3, 4, 34); }));
     }
     // footer links get the row sparkle
-    $$('.ftr ul a').forEach((a) => { if (!a.querySelector('.ftr__spk')) a.insertAdjacentHTML('afterbegin', `<svg class="ftr__spk" viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`); });
+    $$('.ftr ul a').forEach((a) => { if (!a.querySelector('.ftr__spk')) a.insertAdjacentHTML('afterbegin', `<svg class="ftr__spk" viewBox="0 0 100 100" aria-hidden="true"><path d="${SPARK}"/></svg>`); });
 
     // a tiny evil eye signs off the page; it glances toward the pointer
     const base = $('.ftr__base', ftr);
@@ -612,5 +614,5 @@ if (music && sound) {
     setTimeout(scan, 600);
   })();
 
-  window.DLSNL = { asset, EMAIL, STAR, IRI, sparks, star: starState, logoURL, reduce, fine, hasG, lenis, toast, scramble, swapText, runLoader, tintLogo, scrollTo, $, $$ };
+  window.DLSNL = { asset, EMAIL, STAR, SPARK, IRI, sparks, star: starState, logoURL, reduce, fine, hasG, lenis, toast, scramble, swapText, runLoader, tintLogo, scrollTo, $, $$ };
 })();
