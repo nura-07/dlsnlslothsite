@@ -87,3 +87,36 @@
 .fit-bg { position: absolute; inset: -20px; background-size: cover; background-position: center; filter: blur(24px) brightness(.55) saturate(1.1); transform: scale(1.1); }
 .wc__cover img { position: relative; object-fit: contain; transform: none; }
 .wc a:hover .wc__cover img { transform: scale(1.03); }
+
+/* ---------- a closed hardcover (Trend Book) ---------- */
+.bk { --w: 62%; position: relative; width: var(--w); aspect-ratio: 3 / 4; margin: auto; transform-style: preserve-3d; transform: perspective(1400px) rotateY(-24deg) rotateX(4deg); transition: transform 1s var(--ease); }
+.bk__front { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 12% 12% 12% 16%; border-radius: 3px 8px 8px 3px; color: #E9D3A0;
+  background: radial-gradient(120% 80% at 80% 0%, rgba(233, 211, 160, .14), transparent 55%), repeating-linear-gradient(0deg, rgba(255, 255, 255, .018) 0 1px, transparent 1px 3px), linear-gradient(135deg, #2A2418, #17130D);
+  box-shadow: inset 6px 0 10px rgba(0, 0, 0, .55), inset -1px 0 0 rgba(233, 211, 160, .25), 0 30px 60px rgba(0, 0, 0, .55); transform: translateZ(14px); }
+.bk__front::before { content: ""; position: absolute; left: 7%; top: 0; bottom: 0; width: 2px; background: linear-gradient(rgba(0, 0, 0, .5), rgba(233, 211, 160, .15), rgba(0, 0, 0, .5)); }
+.bk__front::after { content: ""; position: absolute; inset: 7% 7% 7% 12%; border: 1px solid rgba(233, 211, 160, .35); border-radius: 2px; pointer-events: none; }
+.bk__front b { font: 600 clamp(26px, 4vw, 54px)/.95 var(--f); letter-spacing: -.04em; background: linear-gradient(120deg, #F6E3B2, #C9A35C 45%, #F3DDA6 70%, #A9813F); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bk__k, .bk__foot { font-size: clamp(8px, .8vw, 11px); letter-spacing: .2em; text-transform: uppercase; opacity: .8; }
+.bk__s { font-size: clamp(11px, 1.1vw, 15px); font-style: italic; opacity: .85; }
+.bk__foot { margin-top: auto; }
+.bk__pages { position: absolute; top: 2%; bottom: 2%; right: -2px; width: 28px; transform: rotateY(90deg) translateZ(calc(var(--w) * 0)); transform-origin: right; background: repeating-linear-gradient(90deg, #EFE7D6 0 1px, #D9CFBA 1px 2px); }
+.bk__spine { position: absolute; top: 0; bottom: 0; left: 0; width: 28px; transform-origin: left; transform: rotateY(-90deg); background: linear-gradient(90deg, #0F0C08, #2A2418 40%, #17130D); }
+.cs-cover--book { background: none !important; border: 0 !important; box-shadow: none !important; overflow: visible; display: grid; place-items: center; }
+.cs-cover--book:hover .bk, .wc a:hover .bk { transform: perspective(1400px) rotateY(-8deg) rotateX(2deg) translateY(-6px); }
+.wc__type--book { background: radial-gradient(70% 90% at 50% 40%, rgba(162, 119, 46, .28), #0B0A10 75%); }
+.wc__type--book .bk { --w: 30%; }
+
+.wc__cover--light { background: #F6F1E4; }
+.wc__cover--light .fit-bg { display: none; }
+.wc__type--book .bk { --w: 24%; }
+.wc__type--book .bk__front { gap: 4px; padding: 10% 10% 10% 15%; }
+.wc__type--book .bk span { font: inherit; font-size: 6px; letter-spacing: .14em; }
+.wc__type--book .bk .bk__s { font-size: 8px; letter-spacing: 0; }
+.wc__type--book .bk b { font-size: clamp(16px, 1.6vw, 22px); }
+
+/* v10: phones: card facts wrap instead of being cut */
+@media (max-width: 760px) {
+  .wc__facts dd { white-space: normal; overflow: visible; text-overflow: clip; }
+  .wc__facts dt, .wc__no, .wc__status { font-size: 12px; }
+}
+@media (max-width: 760px) { .wc small, .wc__tags li { font-size: 12px; } }

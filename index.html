@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <title>Arundhati Mitra, DLSNL Sloth Studio</title>
   <meta name="description" content="Arundhati Mitra is a senior brand designer. Identities, launches and the AI-assisted systems behind them, from DLSNL Sloth Studio." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,16 +14,16 @@
 </head>
 <body data-page="home">
 
-  <!-- Loader: pixel counter + flickering line. Plays once per visit. -->
+  <!-- Loader: the sparkle draws itself, then the page opens through it. Once per visit. -->
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="loader__core">
-    <svg class="loader__ring" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" /><circle class="loader__fill" id="loaderFill" cx="60" cy="60" r="56" pathLength="1" /></svg>
-    <span class="lstar loader__star"></span>
-  </div>
-  <p class="loader__line">Loading delusions</p>
-  <p class="loader__count"><span id="loaderNum">0</span><small>%</small></p>
+  <svg class="loader__mark" viewBox="-4 -4 152 132">
+    <path class="lm lm--big" d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z" transform="translate(0 24)" pathLength="1" />
+    <g transform="translate(98 0) scale(.46)"><path class="lm lm--small" d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z" pathLength="1" /></g>
+  </svg>
+  <p class="loader__word"><span id="loaderWord">Dreaming it up</span></p>
   <p class="loader__corner loader__corner--l">DLSNL Sloth Studio</p>
-  <p class="loader__corner loader__corner--r">New Delhi, India</p>
+  <p class="loader__corner loader__corner--r"><span id="loaderNum">0</span>%</p>
+  <i class="loader__bar" aria-hidden="true"><i id="loaderBar"></i></i>
 </div>
 
   <!-- Page transition curtain -->
@@ -33,7 +35,7 @@
     <div class="hdr__right">
       <button class="sound" id="sound" aria-pressed="false" aria-label="Play background music">
         <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <span class="sound__label">Sound off</span>
+        <span class="sound__label">Play music</span>
       </button>
       <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"><span class="burger__star" aria-hidden="true"></span><span class="burger__label">Menu</span><span class="burger__icon" aria-hidden="true"><i></i><i></i><i></i></span></button>
     </div>
@@ -90,7 +92,7 @@
         <li>AI workflows</li>
       </ul>
       <aside class="meaning" aria-label="What the studio name means">
-        <p class="meaning__word">DLSNL Sloth</p>
+        <p class="meaning__word">Dlsnl sloth</p>
         <dl class="meaning__senses">
           <div><dt>Delusional</dt><dd>believing in an idea before anyone else can see it</dd></div>
           <div><dt>Sloth</dt><dd>taking the time to get every detail right</dd></div>
@@ -138,12 +140,12 @@
           <button class="btn-text" id="faceReset">Peel them all off</button>
         </div>
         <form class="keep" id="keep" autocomplete="off">
-          <label class="keep__label" for="keepWord">Take it home as a sticker</label>
+          <label class="keep__label" for="keepWord">Take it home as a wallpaper</label>
           <div class="keep__row">
             <input class="keep__input" id="keepWord" name="word" maxlength="10" placeholder="Up to 10 letters" pattern="[A-Za-z]{0,10}" spellcheck="false" />
             <button class="keep__btn" type="submit">Download</button>
           </div>
-          <p class="keep__hint" id="keepHint">Add your word under the face, or leave it empty for the DLSNL Sloth logo.</p>
+          <p class="keep__hint" id="keepHint">Add your word under the face, or leave it empty for the Dlsnl Sloth logo. It saves as a phone wallpaper.</p>
         </form>
       </div>
       <div class="face__board" id="faceBoard">

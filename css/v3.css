@@ -207,3 +207,9 @@ body.intro-open main, body.intro-open .site-header, body.intro-open #site-footer
 .crate2__tag { background: #fbf6ee; border: 1px solid var(--line-strong); box-shadow: none; }
 .crate2__info p { opacity: 1; color: var(--olive); }
 .crate2 .crate__wip { background: transparent; color: var(--olive); border: 1px solid var(--line-strong); }
+
+/* v10: phones (About keeps its older look until its redesign) */
+@media (max-width: 760px) {
+  .sloth__stage { overflow: hidden; max-width: 100%; }
+  .c2-ticket, .pg-no { font-size: 12px; }
+}

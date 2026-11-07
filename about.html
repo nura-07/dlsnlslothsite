@@ -3,118 +3,248 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
   <title>About, Arundhati Mitra</title>
-  <meta name="description" content="Arundhati Mitra, brand designer, strategist and illustrator behind the DLSNL Sloth studio." />
+  <meta name="description" content="Arundhati Mitra, the delusional sloth: a brand designer who grew from the drawing board to whole launches. Plus her personal artwork, and her dog." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/site.css" />
-  <link rel="stylesheet" href="css/v2.css" />
-  <link rel="stylesheet" href="css/v3.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@200..700&family=Shrikhand&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/dlsnl.css" />
+  <link rel="stylesheet" href="css/about.css" />
 </head>
 <body data-page="about" id="top">
-  <main>
-    <!-- ============ HERO COLLAGE ============ -->
-    <section class="ab-hero wrap">
-      <div>
-        <p class="eyebrow rv">About the studio of one</p>
-        <h1 class="display rv ab-title" style="margin-top:24px">Hi, I&rsquo;m<br>Arundhati.<span>the delusional sloth.</span></h1>
-        <p class="lede rv" style="margin-top:28px">Brand designer by trade, strategist by training, illustrator by heart. I build brands that feel hand-made and perform like machines.</p>
+
+  <!-- Page transition curtain -->
+  <div class="curtain" id="curtain" aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z"/></svg></div>
+
+  <!-- Header -->
+  <header class="hdr" id="hdr">
+    <a class="hdr__logo" href="index.html" aria-label="DLSNL Sloth Studio, home"><img data-logo="lilac" alt="DLSNL Sloth Creative Studio" /></a>
+    <div class="hdr__right">
+      <button class="sound" id="sound" aria-pressed="false" aria-label="Play background music">
+        <span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound__label">Play music</span>
+      </button>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="menu"><span class="burger__star" aria-hidden="true"></span><span class="burger__label">Menu</span><span class="burger__icon" aria-hidden="true"><i></i><i></i><i></i></span></button>
+    </div>
+  </header>
+
+  <!-- Full-screen menu (same links as the footer) -->
+<nav class="menu" id="menu" aria-label="Main" hidden>
+  <span class="lstar menu__star" aria-hidden="true"></span>
+  <div class="menu__grid">
+    <ul class="menu__links">
+      <li><a href="index.html"><small>Home</small><span>Start here</span><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></i></a></li>
+      <li><a href="work.html"><small>Work</small><span>Selected projects</span><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></i></a></li>
+      <li><a href="about.html"><small>About</small><span>The delusional sloth</span><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></i></a></li>
+      <li><a href="index.html#contact"><small>Contact</small><span>Say hello</span><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></i></a></li>
+    </ul>
+    <aside class="menu__card">
+      <p class="menu__hello">Have something slightly delusional in mind?</p>
+      <a class="btn-iri" href="mailto:delusionalsloth.art@gmail.com?subject=Hello%20from%20your%20portfolio"><span>Write to me</span><i aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z"/></svg></i></a>
+      <ul class="menu__social" data-social></ul>
+      <p class="menu__where"><svg class="pin" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 15s5-5.1 5-8.6A5 5 0 0 0 3 6.4C3 9.9 8 15 8 15z"/><circle cx="8" cy="6.5" r="1.8"/></svg>New Delhi <time class="who__time" data-ist>--:-- IST</time></p>
+    </aside>
+  </div>
+</nav>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="liquid" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="9s" values="0.018;0.028;0.018" repeatCount="indefinite" /></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="9" xChannelSelector="R" yChannelSelector="G" /></filter></svg>
+    <main id="main" class="ab" tabindex="-1">
+
+    <!-- ================= HELLO ================= -->
+    <section class="ab-hero" id="hello">
+      <div class="ab-fluid" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <canvas class="ab-glitter" id="glitter" aria-hidden="true"></canvas>
+
+      <div class="ab-hero__copy">
+        <p class="ab-kicker"><span class="ab-spark" aria-hidden="true"></span>About me</p>
+        <h1 class="ab-title">Hi, I'm Arundhati,<br /><span class="ab-shine">the delusional sloth.</span></h1>
+        <p class="ab-lede">I've been making things since I was nine. Today I shape <b class="kw">brand systems</b>, lead <b class="kw">creative direction</b> and run <b class="kw">go-to-market launches</b> across the Middle East, Europe and the US, with <b class="kw">AI workflows</b> doing the heavy lifting so the craft gets more of my time, not less.</p>
+        <p class="ab-lede ab-lede--soft">Off the clock you'll find me painting, chasing a trail or a river with music on, and spending every spare minute with <b class="kw kw--warm">my dog</b>, who is, without question, my favourite person.</p>
+        <div class="ab-hero__cta">
+          <a class="btn-iri" href="assets/Arundhati-Mitra-Resume.pdf" target="_blank" rel="noopener"><span>Résumé</span><i aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z"/></svg></i></a>
+          <a class="ab-link" href="#sketchbook">See my sketchbook <span aria-hidden="true">↓</span></a>
+        </div>
       </div>
-      <div class="collage2" id="collage" aria-hidden="true">
-        <img class="ink c2-head" data-depth=".5" src="assets/ink/head-open.png" alt="" />
-        <figure class="c2-portrait" data-depth=".9"><div class="c2-portrait__in"><span>Portrait<br><em>to add</em></span></div><figcaption>Plate I: the designer</figcaption></figure>
-        <figure class="c2-art" data-depth="1.3"><img src="https://framerusercontent.com/images/QsysRbgXY7csitaP84nzIAwSTM.jpg?scale-down-to=1024" alt="" /><span class="c2-tape"></span></figure>
-        <img class="ink c2-hook" data-depth="1.8" src="assets/ink/hook-plain.png" alt="" />
-        <img class="ink c2-lemon" data-depth="1.5" src="assets/ink/lemon-half.png" alt="" />
-        <img class="ink c2-fly" data-depth="2.4" src="assets/ink/fly-side.png" alt="" />
-        <span class="c2-ticket" data-depth="1.2">Brand · Art · Strategy</span>
+
+      <div class="ab-pics" aria-label="Me, on the water, and my dog">
+        <figure class="ab-pic ab-pic--arch" data-float="1">
+          <video id="heroVid" src="assets/about/rafting.mp4" poster="assets/about/rafting-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Arundhati rafting past waterfalls, turning back to smile"></video>
+          <figcaption class="ab-tag ab-tag--a"><span aria-hidden="true">≋</span>Chasing waterfalls</figcaption>
+        </figure>
+        <figure class="ab-pic ab-pic--blob" data-float="2">
+          <img src="assets/about/dog.jpg" alt="Her golden retriever grinning in fluffy earmuffs" />
+          <figcaption class="ab-tag ab-tag--b"><span class="ab-heart" aria-hidden="true">♥</span>Chief of morale</figcaption>
+        </figure>
+        <span class="ab-orbit" aria-hidden="true"></span>
       </div>
     </section>
 
-    <!-- ============ ME ============ -->
-    <section class="section wrap" style="padding-top:40px">
-      <div class="ab-me">
-        <div>
-          <p class="eyebrow rv">A little about me</p>
-          <p class="big rv" style="margin-top:18px">I refuse to choose between the <em>strategy deck</em> and the <em>sketchbook</em>. The best brands need both.</p>
-        </div>
-        <div>
-          <p class="rv">Sir J.J. Institute taught me type, craft and the patience of the drawing board. NIFT taught me to research before I design and to defend every choice with a reason. Seven years in-house and freelance taught me speed: ed-tech pages that had to convert, D2C brands that had to stand out, an emblem the Indian Army had to approve, and a 225-ad launch across five markets.</p>
-          <p class="rv">Today I lead design and marketing for skincare and supplement launches across the Middle East, Europe and the US, and I've rebuilt how my team works around AI, so the craft gets more time, not less.</p>
-          <p class="rv">Off the clock I draw for <a class="link-u" href="https://www.instagram.com/delusion_art_studio/" target="_blank" rel="noopener">@delusion_art_studio</a>, go wherever there's a trail, and make friends with every dog I meet.</p>
-          <ul class="likes rv">
-            <li>Illustration</li><li>Typography</li><li>Travel</li><li>Dogs</li><li>The outdoors</li><li>Vintage print</li>
-          </ul>
-        </div>
+    <!-- ================= HOW I GREW ================= -->
+    <section class="ab-sec ab-grow" id="grew">
+      <div class="ab-sec__head">
+        <p class="ab-kicker"><span class="ab-spark" aria-hidden="true"></span>How I grew</p>
+        <h2 class="ab-h">Twenty years of making, <span class="ab-shine">one chapter at a time.</span></h2>
+      </div>
+      <!-- the timeline leads: each stretch is as long as the years it took -->
+      <div class="tl" aria-hidden="true">
+        <div class="tl__seg c1" style="--w:9"><span class="tl__yrs">9<small>yrs</small></span><i class="tl__bar"></i><span class="tl__tick">Age 9<em>Fine arts, from the very start</em></span></div>
+        <div class="tl__seg c2" style="--w:4"><span class="tl__yrs">4<small>yrs</small></span><i class="tl__bar"></i><span class="tl__tick">J.J.<em>Many styles, one hand</em></span></div>
+        <div class="tl__seg c3" style="--w:2"><span class="tl__yrs">2<small>yrs</small></span><i class="tl__bar"></i><span class="tl__tick">NIFT<em>A reason behind the feeling</em></span></div>
+        <div class="tl__seg c4" style="--w:5"><span class="tl__yrs">5<small>yrs</small></span><i class="tl__bar"></i><span class="tl__tick">Work<em>Craft at work, art at heart</em></span><span class="tl__tick tl__tick--end">Now</span></div>
+      </div>
+      <ol class="gr">
+        <li class="gr__ch c1">
+          <span class="gi" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M31 7 41 17 25 33l-7 2 2-7z"/><path d="M27 11l10 10"/><path d="M16 31c-5 0-8 3-8 9 5 0 9-1 10-6"/></svg></span>
+          <span class="gr__yrs">9 years</span><span class="gr__when">From age nine</span>
+          <h3>Fine arts, from the very start</h3>
+          <p>Paper, paint and patience: <span class="kw">fine arts</span> trained my hands and eye first.</p>
+        </li>
+        <li class="gr__ch c2">
+          <span class="gi" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 7 6 16l18 9 18-9z"/><path d="M6 24l18 9 18-9"/><path d="M6 32l18 9 18-9"/></svg></span>
+          <span class="gr__yrs">4 years</span><span class="gr__when">Sir J.J. Institute, Mumbai</span>
+          <h3>Many styles, one hand</h3>
+          <p>Fine arts met <span class="kw">graphic and digital</span> practice, from brush to type to screen.</p>
+        </li>
+        <li class="gr__ch c3">
+          <span class="gi" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="21" cy="21" r="12"/><path d="M30 30l11 11"/><path d="M21 14c1 4 3 6 7 7-4 1-6 3-7 7-1-4-3-6-7-7 4-1 6-3 7-7z"/></svg></span>
+          <span class="gr__yrs">2 years</span><span class="gr__when">NIFT, New Delhi</span>
+          <h3>A reason behind the feeling</h3>
+          <p>Design and <span class="kw">research</span> gave art's subjectiveness a reason and a logic.</p>
+        </li>
+        <li class="gr__ch c4">
+          <span class="gi" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="8" y="10" width="32" height="22" rx="3"/><path d="M4 38h40"/><path d="M24 28c-5-3.5-7-6-7-8.5a3.3 3.3 0 0 1 7-1.3 3.3 3.3 0 0 1 7 1.3c0 2.5-2 5-7 8.5z"/></svg></span>
+          <span class="gr__yrs">5 years</span><span class="gr__when">Since then</span>
+          <h3>Craft at work, art at heart</h3>
+          <p>Mostly <span class="kw">digital</span> for brands, still painting for joy and for <span class="kw kw--warm">gifts that mean something</span>.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ================= WHAT I'M MADE OF ================= -->
+    <section class="ab-sec ab-made" id="made">
+      <div class="ab-sec__head">
+        <p class="ab-kicker"><span class="ab-spark" aria-hidden="true"></span>What I'm made of</p>
+        <h2 class="ab-h">Half strategist, half sketchbook, <span class="ab-shine">all heart.</span></h2>
+      </div>
+      <ul class="mk">
+        <li>
+          <svg class="mk__art mk__art--look" viewBox="0 0 200 160" aria-hidden="true"><g class="mk__dots"><circle cx="40" cy="40" r="4"/><circle cx="90" cy="30" r="3"/><circle cx="150" cy="50" r="4"/><circle cx="60" cy="100" r="3"/><circle cx="120" cy="110" r="4"/><circle cx="165" cy="120" r="3"/><circle cx="30" cy="135" r="3"/></g><g class="mk__lens"><circle cx="0" cy="0" r="26"/><path d="M19 19 38 38"/></g></svg>
+          <b>Research first</b><p>I dig before I draw, and keep an eye on what's next so the work stays relevant.</p>
+        </li>
+        <li>
+          <svg class="mk__art mk__art--team" viewBox="0 0 200 160" aria-hidden="true"><g class="mk__web"><path d="M100 80 60 40M100 80 150 45M100 80 45 115M100 80 155 118M100 80 100 22"/></g><g class="mk__nodes"><circle cx="100" cy="80" r="9"/><circle cx="60" cy="40" r="6"/><circle cx="150" cy="45" r="6"/><circle cx="45" cy="115" r="6"/><circle cx="155" cy="118" r="6"/><circle cx="100" cy="22" r="5"/></g></svg>
+          <b>Built for teams</b><p>I bring people and functions together, with open feedback, both ways.</p>
+        </li>
+        <li>
+          <svg class="mk__art mk__art--story" viewBox="0 0 200 160" aria-hidden="true"><path class="mk__scribble" d="M20 110c14-40 30 30 44-6s26-50 40-8 22 30 36-12 24-26 40-34"/><path class="mk__line" d="M20 130 70 104 110 112 180 50"/><path class="mk__arrow" d="M164 50h16v16"/></svg>
+          <b>Story meets strategy</b><p>Design craft and marketing sense in one head: work that looks right and performs.</p>
+        </li>
+      </ul>
+      <div class="mq" aria-label="A few more things about me: delusional optimist, patient on purpose, illustrator by heart, travel junkie, trail walker, dog person above all">
+        <div class="mq__in" aria-hidden="true"><span>Delusional optimist</span><span>Patient on purpose</span><span>Illustrator by heart</span><span>Travel junkie</span><span>Trail walker</span><span class="is-dog">Dog person, above all</span><span>Delusional optimist</span><span>Patient on purpose</span><span>Illustrator by heart</span><span>Travel junkie</span><span>Trail walker</span><span class="is-dog">Dog person, above all</span></div>
       </div>
     </section>
 
-    <!-- ============ PICTURES ============ -->
-    <section class="wrap" style="padding-bottom:clamp(90px,12vw,170px)">
-      <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:34px">
-        <div><p class="eyebrow rv">Snapshots</p><h2 class="h-sec rv">Behind the <em>work</em>.</h2></div>
-        <p class="lede rv" style="max-width:40ch">Desk, sketchbook, trail and the people (and dogs) in between.</p>
+    <!-- ================= BEYOND THE DESK ================= -->
+    <section class="ab-sec ab-life" id="life">
+      <div class="ab-sec__head">
+        <p class="ab-kicker"><span class="ab-spark" aria-hidden="true"></span>Beyond the desk</p>
+        <h2 class="ab-h">The things that <span class="ab-shine">shape me.</span></h2>
       </div>
-      <div class="plates" id="pics">
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/head-side.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate II</b> At work</figcaption></figure>
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/fish-c.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate III</b> Sketchbook spread</figcaption></figure>
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/crate-persp.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate IV</b> The desk</figcaption></figure>
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/fish-up.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate V</b> On a trail</figcaption></figure>
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/lemon-whole.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate VI</b> With a dog</figcaption></figure>
-        <figure class="plate rv"><div class="plate__img"><img class="ink" src="assets/ink/line-three.png" alt="" /><span>Photo to add</span></div><figcaption><b>Plate VII</b> On set</figcaption></figure>
+      <div class="bt">
+        <figure class="bt__i s-tall"><img src="assets/about/me-and-dog.jpg" alt="Arundhati hugging her golden retriever" loading="lazy" /><figcaption>Best friend, full time</figcaption></figure>
+        <p class="bt__w s-wide"><i class="eq" aria-hidden="true"><b></b><b></b><b></b><b></b></i>Music</p>
+        <figure class="bt__i s-port"><img src="assets/life/singer.jpg" alt="A singer on a blue-lit stage" loading="lazy" /><figcaption>Front row</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/band.jpg" alt="A band playing under a glowing pink planet" loading="lazy" /><figcaption>Live and loud</figcaption></figure>
+        <figure class="bt__i s-big"><img src="assets/about/raft-024.jpg" alt="Smiling back from a raft below the waterfalls" loading="lazy" /><figcaption>White water</figcaption></figure>
+        <p class="bt__w s-wide">Sports</p>
+        <figure class="bt__i s-wide"><img src="assets/life/paraglide.jpg" alt="Paragliding high over a forest" loading="lazy" /><figcaption>Up in the air</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/rappel.jpg" alt="Rappelling down a rock face" loading="lazy" /><figcaption>Down the wall</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/riding.jpg" alt="With a horse in a riding arena" loading="lazy" /><figcaption>In the saddle</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/grazing.jpg" alt="A chestnut horse grazing beside her" loading="lazy" /><figcaption>Grazing break</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/stable.jpg" alt="Standing between two horses at the stables" loading="lazy" /><figcaption>Stable mates</figcaption></figure>
+        <p class="bt__w">Art</p>
+        <figure class="bt__i s-port"><img src="assets/life/pottery.jpg" alt="Hands shaping clay on a pottery wheel" loading="lazy" /><figcaption>On the wheel</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/sketch-tree.jpg" alt="A sketchbook painting of the pine tree in front of her" loading="lazy" /><figcaption>Sketching the view</figcaption></figure>
+        <p class="bt__w s-wide">Explorations</p>
+        <figure class="bt__i s-big"><img src="assets/life/ladakh-ride.jpg" alt="A motorcycle on a mountain road in Ladakh" loading="lazy" /><figcaption>Ladakh roads</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/trail.jpg" alt="Walking a sunlit forest trail" loading="lazy" /><figcaption>Into the woods</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/pinecone.jpg" alt="Holding up a pinecone against the mountains" loading="lazy" /><figcaption>Found on a trail</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/hill-horses.jpg" alt="Two horses grazing on a green hilltop" loading="lazy" /><figcaption>Hilltop company</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/kayak.jpg" alt="Feet up in a kayak on a still lake" loading="lazy" /><figcaption>Still water</figcaption></figure>
+        <p class="bt__w bt__w--dog"><span class="ab-heart" aria-hidden="true">♥</span>Dogs</p>
+        <figure class="bt__i s-wide"><img src="assets/about/dog.jpg" alt="Her dog in fluffy earmuffs" loading="lazy" /><figcaption>Earmuff season</figcaption></figure>
+        <figure class="bt__i s-port"><img src="assets/life/dog-buddy.jpg" alt="Pointing at something with a golden retriever beside her" loading="lazy" /><figcaption>Partners in crime</figcaption></figure>
+        <figure class="bt__i s-wide"><img src="assets/life/dogs.jpg" alt="Crouching to greet a fluffy dog" loading="lazy" /><figcaption>Every dog, every time</figcaption></figure>
+        <p class="bt__w bt__w--list s-wide"><span>Trails</span><span>Travel</span><span>Horses</span><span>Clay</span><span>Handmade gifts</span><span>Playlists on loop</span></p>
       </div>
     </section>
 
-    <!-- ============ FLIPBOOK ============ -->
-    <section class="section book-sec wrap" id="sketchbook">
-      <div style="text-align:center">
-        <p class="eyebrow rv">From @delusion_art_studio</p>
-        <h2 class="h-sec rv">The <em>sketchbook</em>.</h2>
-        <p class="rv" style="max-width:52ch;margin:16px auto 0;opacity:.85">Personal work, kept in a frame. Drag a page corner, use the arrows, or your keyboard.</p>
+    <!-- ================= OFF THE CLOCK ================= -->
+    <section class="ab-sec ab-art" id="sketchbook">
+      <div class="ab-art__glow" aria-hidden="true"></div>
+      <div class="ab-sec__head ab-art__head">
+        <p class="ab-kicker"><span class="ab-spark" aria-hidden="true"></span>Off the clock</p>
+        <h2 class="ab-h ab-h--xl">My sketchbook, <span class="ab-shine">always open.</span></h2>
+        <p class="ab-sub">The art I make for myself: <span class="kw">ink a day</span> challenges, <span class="kw">colour</span> studies, a deaf-awareness series and things I've painted on. Tap any piece to look closer.</p>
+        <a class="ig" href="https://www.instagram.com/delusion_art_studio/" target="_blank" rel="noopener">
+          <span class="ig__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" class="ig__dot"/></svg></span>
+          <span class="ig__txt"><small>Follow the sketchbook</small><b>@delusion_art_studio</b></span>
+          <span class="ig__go" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg></span>
+        </a>
       </div>
-      <div class="book-wrap">
-        <div class="frame rv"><div class="book" id="book"><div class="book__base"></div></div></div>
+      <div class="fr" id="wall" aria-label="Personal artwork. Each row drifts slowly; drag or swipe a row sideways to move it, and tap a piece to open it.">
+        <div class="fr__plane" id="wallPlane"></div>
       </div>
-      <div class="book-ui">
-        <button id="bookPrev" aria-label="Previous page">←</button>
-        <span id="bookPage">Cover</span>
-        <button id="bookNext" aria-label="Next page">→</button>
-      </div>
-    </section>
-
-    <!-- ============ WHY DLSNL SLOTH ============ -->
-    <section class="section wrap" id="sloth">
-      <div class="sloth">
-        <div class="sloth__stage" id="slothStage" aria-hidden="true">
-          <svg class="sloth__branch" viewBox="0 0 600 40" preserveAspectRatio="none"><path d="M0 22 C120 8 200 30 300 18 S500 8 600 24" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path d="M140 16 c10 -14 26 -16 34 -8 M420 14 c8 -12 22 -12 30 -4" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
-          <div class="sloth__hang" id="slothHang">
-            <img class="ink sloth__hook sloth__hook--l" src="assets/ink/hook-plain.png" alt="" />
-            <img class="ink sloth__hook sloth__hook--r" src="assets/ink/hook-plain.png" alt="" />
-            <div id="slothLogo"></div>
-            <span class="sloth__spark" id="spark1" style="left:26%;top:7%;width:6%"></span>
-            <span class="sloth__spark" id="spark2" style="left:58%;top:-1%;width:4.5%"></span>
-          </div>
-        </div>
-        <div>
-          <p class="eyebrow rv">Why &ldquo;DLSNL Sloth&rdquo;?</p>
-          <h2 class="h-sec rv">Delusional enough to dream it. <em>Slow</em> enough to get it right.</h2>
-          <ul class="sloth__words">
-            <li class="rv"><b>DLSNL</b><p>Delusional, in the best way. Every brief deserves an idea slightly bigger than the budget, the timeline or the category thinks is reasonable.</p></li>
-            <li class="rv"><b>Sloth</b><p>Slow on purpose. Research before pixels, sketches before software, one more look before it ships. Patience is a craft skill.</p></li>
-            <li class="rv"><b>Studio</b><p>Where the two meet: big ideas, built carefully, now with AI doing the heavy lifting so the slow parts get the time they need.</p></li>
-          </ul>
-          <div class="todo rv"><b>TO ADD</b>Confirm this matches your own reason for the name, or send a line in your words.</div>
-        </div>
-      </div>
+      <p class="mw__hint"><span class="fr__hand" aria-hidden="true">⟷</span>Drag or swipe a row to move it. Tap any piece to see it up close.</p>
     </section>
   </main>
-  <footer id="site-footer"></footer>
+
+  <!-- one piece at a time -->
+  <div class="view" id="view" role="dialog" aria-modal="true" aria-label="Artwork" hidden>
+    <button class="view__back" id="viewBack"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg><span>Back to the sketchbook</span></button>
+    <figure class="view__fig"><div class="view__frame"><img id="viewImg" alt="" /></div>
+      <figcaption><span class="view__series" id="viewSeries"></span><b id="viewTitle"></b><span class="view__n" id="viewN"></span></figcaption></figure>
+    <button class="view__nav view__nav--p" data-v="-1" aria-label="Previous piece"><svg viewBox="0 0 16 16"><path d="M10 3 5 8l5 5"/></svg></button>
+    <button class="view__nav view__nav--n" data-v="1" aria-label="Next piece"><svg viewBox="0 0 16 16"><path d="m6 3 5 5-5 5"/></svg></button>
+  </div>
+
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="ftr">
+    <div class="ftr__top">
+      <p class="ftr__say">Let's make something<br />worth slowing down for.</p>
+      <a class="btn-iri" href="mailto:delusionalsloth.art@gmail.com?subject=Hello%20from%20your%20portfolio"><span>Write to me</span><i aria-hidden="true"><svg viewBox="0 0 100 100"><path d="M50 0C53 35 65 47 100 50 65 53 53 65 50 100 47 65 35 53 0 50 35 47 47 35 50 0Z"/></svg></i></a>
+    </div>
+    <div class="ftr__grid">
+      <div>
+        <h3>Pages</h3>
+        <ul><li><a href="index.html">Home</a></li><li><a href="work.html">Work</a></li><li><a href="about.html">About</a></li><li><a href="assets/Arundhati-Mitra-Resume.pdf" target="_blank" rel="noopener">Résumé</a></li></ul>
+      </div>
+      <div>
+        <h3>Elsewhere</h3>
+        <ul data-social></ul>
+      </div>
+      <div>
+        <h3>Right now</h3>
+        <ul><li class="ftr__where"><svg class="pin" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 15s5-5.1 5-8.6A5 5 0 0 0 3 6.4C3 9.9 8 15 8 15z"/><circle cx="8" cy="6.5" r="1.8"/></svg>New Delhi <time class="who__time" id="clock">--:-- IST</time></li><li>Open to brand and launch work</li></ul>
+      </div>
+      <div class="ftr__up"><a href="#top" class="btn-up" id="toTop">Back to top</a></div>
+    </div>
+    <div class="ftr__logo"><span class="iri-logo" data-iri-logo role="img" aria-label="DLSNL Sloth Creative Studio"></span></div>
+    <div class="ftr__base"><span>© 2026 Arundhati Mitra</span><span>Designed and built slowly, on purpose.</span></div>
+  </footer>
+
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <audio id="music" loop preload="none" src="assets/audio/track.mp3"></audio>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/fish.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/about.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/dlsnl.js"></script>
+  <script src="js/about-new.js"></script>
 </body>
 </html>

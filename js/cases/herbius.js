@@ -157,7 +157,7 @@ const angles = `
   ];
   const system = `
     <p class="hb-lead">A five-person team can't hand-make every ad and page in three languages. So I built the Claude skills the team ran every day, one per station. The AI did the volume; every hook, layout and final call stayed human.</p>
-    <p class="sys__hint">${star}<span>Tap a station to open it</span></p>
+    <p class="sys__hint">${star}<span>The stations open in turn. Hover one to stay on it</span></p>
     <ol class="sys">${STEPS.map(([t, d, tools], i) => `
       <li class="sys__st" style="--i:${i}">
         <button class="sys__btn" aria-expanded="${i === 0}" aria-controls="sys-${i}" data-cursor="Open"><span class="sys__n">${String(i + 1).padStart(2, '0')}</span><b>${t}</b><i class="sys__plus">${plus}</i></button>
@@ -347,16 +347,19 @@ updNav();
     // only auto-turn while the section is on screen
     new IntersectionObserver(([e]) => { if (!e.isIntersecting) { clearInterval(auto); } else if (auto) { clearInterval(auto); auto = setInterval(() => setMarket((cur + 1) % MARKETS.length), 4200); } }).observe($('.geo'));
 
-    // system: stations open and close; a soft pulse travels across them until one is clicked
-    const sBtns = $$('.sys__btn');
-    const openSt = (b) => {
-      const wasOpen = b.getAttribute('aria-expanded') === 'true';
-      sBtns.forEach((x) => x.setAttribute('aria-expanded', 'false'));
-      if (!wasOpen) b.setAttribute('aria-expanded', 'true');
-    };
-    sBtns.forEach((b) => b.addEventListener('click', () => { $('.sys').classList.add('is-touched'); openSt(b); }));
-    let pulse = 0;
-    const tick = setInterval(() => { if ($('.sys').classList.contains('is-touched')) return clearInterval(tick); sBtns.forEach((b, i) => b.classList.toggle('is-hint', i === pulse)); pulse = (pulse + 1) % sBtns.length; }, 1100);
+    // system: the stations open one after another on their own; hovering one holds it open
+    const sBtns = $$('.sys__btn'), sysEl = $('.sys');
+    let si = 0, sTimer = null, sHover = false, sSeen = false;
+    const showSt = (i) => { si = i; sBtns.forEach((x, j) => x.setAttribute('aria-expanded', String(j === i))); };
+    const runSt = () => { clearInterval(sTimer); sTimer = setInterval(() => { if (!sHover) showSt((si + 1) % sBtns.length); }, 4000); };
+    const fineP = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    sBtns.forEach((b, i) => {
+      const li = b.closest('.sys__st');
+      b.addEventListener('mouseenter', () => { if (!fineP) return; sHover = true; sysEl.classList.add('is-held'); showSt(i); });
+      li.addEventListener('mouseleave', () => { if (!sHover) return; sHover = false; sysEl.classList.remove('is-held'); runSt(); });
+      b.addEventListener('click', () => { showSt(i); runSt(); });
+    });
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) { if (!sSeen) { sSeen = true; showSt(0); } runSt(); } else clearInterval(sTimer); }, { threshold: .3 }).observe(sysEl);
 
     // ebooks: switch language, the cover flips
     $$('.book').forEach((card) => {

@@ -13,9 +13,9 @@
   // local covers where we have them; a type cover where we don't
   const COVER = {
     herbius: 'assets/herbius/cover.webp',
-    'zen-barefoot': 'assets/zen/zen-cover.jpg',
-    'sena-diwas-2027': 'assets/sena/sena-logo.jpg',
-    'little-things-by-shivani': null,
+    'zen-barefoot': 'assets/zen/shoe-1.jpg',
+    'sena-diwas-2027': null,
+    'little-things-by-shivani': 'assets/little/logo-stacked.webp',
     'trend-book': null
   };
   const TYPE = { 'trend-book': 'Three<br><em>futures</em>' };
@@ -25,8 +25,8 @@
     'nari-sashaktikaran': ['1 mark', 'for an all-women rally'],
     'zen-barefoot': ['12K', 'Instagram followers'],
     gradright: ['13+', 'lenders, plus university campaigns'],
-    'sena-diwas-2027': ['26', 'layers in the emblem'],
-    'little-things-by-shivani': ['18K', 'Instagram followers'],
+    'sena-diwas-2027': ['Soon', 'unveiled after Army Day'],
+    'little-things-by-shivani': ['18K+', 'on Instagram'],
     'trend-book': ['3', 'futures, decoded']
   };
   const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg>';
@@ -39,9 +39,9 @@
     const kick = String(p.kicker || '').split('·').map((s) => s.trim()).filter(Boolean);
     return `<li class="wc wc--${p.tier}" data-tier="${p.tier}" style="--c:${p.accent}">
       <a href="case.html?p=${p.slug}" data-cursor="Open case">
-        <div class="wc__cover">${cover
+        <div class="wc__cover${p.coverLight ? ' wc__cover--light' : ''}">${cover
           ? `<span class="fit-bg" style="background-image:url('${D.asset(cover)}')" aria-hidden="true"></span><img src="${D.asset(cover)}" alt="" loading="lazy" />`
-          : `<div class="wc__type"><span>${TYPE[p.slug] || p.coverText || p.title}</span></div>`}
+          : p.bookCover ? `<div class="wc__type wc__type--book"><div class="bk"><div class="bk__front"><span class="bk__k">A research document</span><b>${p.title}</b><span class="bk__s">Three futures, decoded</span></div><div class="bk__pages"></div><div class="bk__spine"></div></div></div>` : `<div class="wc__type"><span>${TYPE[p.slug] || p.coverText || p.title}</span></div>`}
           <span class="wc__no">${p.no}</span>
           ${p.status ? `<span class="wc__status">${p.status}</span>` : ''}
         </div>

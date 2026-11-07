@@ -143,11 +143,11 @@
   const FACT = {
     'herbius': { client: 'Transformative Ventures', b: '225', t: 'ads in six months', cover: 'assets/herbius/cover.webp' },
     'nari-sashaktikaran': { client: 'Indian Army', sub: 'Biker rally logo', b: '1 mark', t: 'for an all-women rally' },
-    'zen-barefoot': { client: 'Zen Barefoot', sub: 'Seen on Shark Tank India', b: '12K', t: 'Instagram followers', cover: 'assets/zen/zen-cover.jpg' },
+    'zen-barefoot': { client: 'Zen Barefoot', sub: 'Seen on Shark Tank India', b: '12K', t: 'Instagram followers', cover: 'assets/zen/shoe-1.jpg' },
     'gradright': { client: 'GradRight Inc.', sub: 'Digital marketing', b: '13+', t: 'lenders, plus university campaigns' },
-    'sena-diwas-2027': { client: 'Indian Army', tag: 'In progress', b: '26', t: 'layers in the emblem' },
-    'little-things-by-shivani': { client: 'Shivani Kohli', b: '18K', t: 'Instagram followers' },
-    'trend-book': { client: 'with Spandita Jakhar', b: '3', t: 'futures, decoded', cover: null, coverText: 'Three<br><em>futures</em>' }
+    'sena-diwas-2027': { client: 'Indian Army', tag: 'Under wraps', b: 'Soon', t: 'unveiled after Army Day', cover: null, coverText: 'Under<br><em>wraps</em>' },
+    'little-things-by-shivani': { client: 'Shivani Kohli', sub: 'Built from home', b: '18K+', t: 'on Instagram', cover: 'assets/little/logo-stacked.webp' },
+    'trend-book': { client: 'NIFT, team of five', b: '3', t: 'futures, decoded', cover: 'assets/trend/page-01.jpg' }
   };
   const arrow = '<svg viewBox="0 0 16 16"><path d="M3 13 13 3M5 3h8v8"/></svg>';
   const indexEl = $('#index');
@@ -200,7 +200,7 @@
   const peekHTML = (p) => {
     const f = FACT[p.slug] || {};
     const cover = 'cover' in f ? f.cover : p.cover, text = 'coverText' in f ? f.coverText : p.coverText;
-    return cover ? `<span class="fit-bg" style="background-image:url('${D.asset(cover)}')" aria-hidden="true"></span><img src="${D.asset(cover)}" alt="" />` : `<div class="peek__type" style="--c:${p.accent}"><span>${text || p.title}</span></div>`;
+    return cover && p.coverLight ? `<img src="${D.asset(cover)}" alt="" style="background:#F6F1E4;object-fit:contain" />` : cover ? `<span class="fit-bg" style="background-image:url('${D.asset(cover)}')" aria-hidden="true"></span><img src="${D.asset(cover)}" alt="" />` : `<div class="peek__type" style="--c:${p.accent}"><span>${text || p.title}</span></div>`;
   };
   if (D.fine && !reduce) {
     let px = 0, py = 0, tx = 0, ty = 0, cur = null, raf = 0;
@@ -546,6 +546,18 @@
         x.drawImage(lv, W / 2 - w / 2, sigTop - 10, w, h);
       }
     }
+    // the studio tag, fixed at the top right, like a label on the sticker's edge
+    await document.fonts.load('60px Shrikhand');
+    x.save(); x.translate(fx + F * .775, fy + F * .2); x.rotate(48 * Math.PI / 180);
+    x.font = '40px Shrikhand';
+    const tag = 'Dlsnl Sloth', tw = x.measureText(tag).width, ph = 66, pw = tw + 98;
+    x.beginPath(); x.roundRect(-pw / 2, -ph / 2, pw, ph, ph / 2);
+    x.fillStyle = '#FFF4EA'; x.fill();
+    x.lineWidth = 2; x.strokeStyle = 'rgba(74, 20, 184, .18)'; x.stroke();
+    x.fillStyle = '#4A14B8'; x.textAlign = 'left'; x.textBaseline = 'middle';
+    x.fillText(tag, -pw / 2 + 66, 4);
+    x.save(); x.translate(-pw / 2 + 24, -13); x.scale(.26, .26); x.fill(new Path2D(D.STAR)); x.restore();
+    x.restore();
     // the white die-cut border: the artwork's silhouette, grown outward
     const sil = document.createElement('canvas'); sil.width = W; sil.height = H; const sc = sil.getContext('2d');
     sc.drawImage(art, 0, 0); sc.globalCompositeOperation = 'source-in'; sc.fillStyle = '#fff'; sc.fillRect(0, 0, W, H);
@@ -556,9 +568,55 @@
     out.save(); out.shadowColor = 'rgba(20, 10, 40, .22)'; out.shadowBlur = 26; out.shadowOffsetY = 10; out.drawImage(border, 0, 0); out.restore();
     out.drawImage(border, 0, 0);
     out.drawImage(art, 0, 0);
-    return new Promise((res) => cv.toBlob(res, 'image/png'));
+    return cv;
+  }
+  function swirl(W, H) {
+    // marbled bands that pour out from behind the sticker, in the studio's purples, pinks and oranges
+    const w = W / 4 | 0, h = H / 4 | 0, small = document.createElement('canvas'); small.width = w; small.height = h;
+    const sc = small.getContext('2d'), id = sc.createImageData(w, h), d = id.data;
+    const PAL = ['#3A0E5E', '#6B1F93', '#B4318F', '#EE6DAE', '#F47B22', '#F9C99A', '#C08BE6', '#5B1A86'].map((c) => [1, 3, 5].map((i) => parseInt(c.substr(i, 2), 16)));
+    const r1 = Math.random() * 6.28, r2 = Math.random() * 6.28, r3 = Math.random() * 6.28, rays = 7 + (Math.random() * 4 | 0);
+    const ss = (e0, e1, t) => { t = Math.max(0, Math.min(1, (t - e0) / (e1 - e0))); return t * t * (3 - 2 * t); };
+    for (let y = 0; y < h; y++) for (let x0 = 0; x0 < w; x0++) {
+      const nx = (x0 - w / 2) / w, ny = (y - h * .46) / w, r = Math.hypot(nx, ny), a = Math.atan2(ny, nx);
+      let v = a / (Math.PI * 2) * rays + Math.sin(r * 6 - a * 3 + r1) * .55 * Math.min(1, r * 3)
+        + Math.sin(nx * 3.2 + Math.sin(ny * 2.8 + r2) * 1.6) * .3
+        + Math.sin(ny * 3.6 + Math.cos(nx * 2.6 + r3) * 1.5) * .26 + r * 1.1;
+      v -= Math.floor(v);
+      const k = v * PAL.length, i = k | 0, t = ss(.32, .68, k - i), A = PAL[i], B = PAL[(i + 1) % PAL.length], o = (y * w + x0) * 4;
+      d[o] = A[0] + (B[0] - A[0]) * t; d[o + 1] = A[1] + (B[1] - A[1]) * t; d[o + 2] = A[2] + (B[2] - A[2]) * t; d[o + 3] = 255;
+    }
+    sc.putImageData(id, 0, 0);
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H; const c = cv.getContext('2d');
+    c.imageSmoothingQuality = 'high'; c.drawImage(small, 0, 0, W, H);
+    // painted grain
+    const g = c.getImageData(0, 0, W, H), gd = g.data;
+    for (let i = 0; i < gd.length; i += 4) { const n = (Math.random() - .5) * 22; gd[i] += n; gd[i + 1] += n; gd[i + 2] += n; }
+    c.putImageData(g, 0, 0);
+    // a soft dark edge, so the sticker reads first
+    const vg = c.createRadialGradient(W / 2, H * .46, W * .3, W / 2, H * .5, H * .75);
+    vg.addColorStop(0, 'rgba(30, 6, 50, 0)'); vg.addColorStop(1, 'rgba(30, 6, 50, .45)');
+    c.fillStyle = vg; c.fillRect(0, 0, W, H);
+    // four-point stars, kept out of the sticker's way
+    const star = new Path2D(D.STAR);
+    for (let n = 0, tries = 0; n < 16 && tries < 400; tries++) {
+      const sx = Math.random() * W, sy = Math.random() * H, sz = 18 + Math.random() * (n < 5 ? 70 : 34);
+      if (Math.abs(sx - W / 2) < W * .46 && Math.abs(sy - H * .46) < W * .5) continue;
+      c.save(); c.translate(sx, sy); c.scale(sz / 100, sz / 100); c.translate(-50, -50);
+      c.globalAlpha = .75 + Math.random() * .25; c.fillStyle = Math.random() < .8 ? '#FAD7A6' : '#FFB36B';
+      c.shadowColor = 'rgba(255, 220, 170, .6)'; c.shadowBlur = 30; c.fill(star); c.restore(); n++;
+    }
+    return cv;
+  }
+  async function exportWallpaper(word) {
+    const W = 1080, H = 1920, cv = swirl(W, H), c = cv.getContext('2d');
+    const stk = await exportCard(word), S = W * .98;
+    c.save(); c.shadowColor = 'rgba(20, 0, 40, .45)'; c.shadowBlur = 50; c.shadowOffsetY = 18;
+    c.drawImage(stk, (W - S) / 2, H * .46 - S / 2, S, S); c.restore();
+    return cv;
   }
   window.DLSNL.exportCard = exportCard; // handy for testing the download
+  window.DLSNL.exportWallpaper = exportWallpaper;
   const keep = $('#keep'), keepWord = $('#keepWord'), keepHint = $('#keepHint');
   keepWord.addEventListener('input', () => { keepWord.value = keepWord.value.replace(/[^A-Za-z]/g, '').slice(0, 10); });
   keep.addEventListener('submit', async (e) => {
@@ -566,9 +624,10 @@
     const word = keepWord.value.trim();
     const btn = keep.querySelector('button'); btn.disabled = true; btn.textContent = 'Making…';
     try {
-      const blob = await exportCard(word);
+      const cv = await exportWallpaper(word);
+      const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob); a.download = `dlsnl-sticker-${(word || 'sloth').toLowerCase()}.png`;
+      a.href = URL.createObjectURL(blob); a.download = `dlsnl-wallpaper-${(word || 'sloth').toLowerCase()}.png`;
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       keepHint.textContent = 'Saved. Show me on Instagram @delusion_art_studio.';

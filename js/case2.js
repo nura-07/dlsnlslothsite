@@ -25,12 +25,13 @@
   const star = `<svg viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`;
   const arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13 13 3M5 3h8v8"/></svg>';
   const back = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4 3 8l4 4"/></svg>';
+  const arrowR = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
   const emblem = (s) => `<svg viewBox="0 0 48 48" aria-hidden="true">${ICONS[s] || ''}</svg>`;
   const clean = (t) => String(t).replace(/\s*·\s*/g, ', ');           // "A · B" reads "A, B"
   const stepName = (t) => String(t).replace(/^\d+\s*·\s*/, '');        // "01 · Research" → "Research"
   const hasBlank = (t) => /__/.test(t);
   const todo = (items) => showTodo && items && items.length ? `<aside class="cs-todo"><b>To add</b><ul>${items.map((t) => `<li>${t}</li>`).join('')}</ul></aside>` : '';
-  const covers = { herbius: 'assets/herbius/cover.webp', 'zen-barefoot': 'assets/zen/zen-cover.jpg' };
+  const covers = { herbius: 'assets/herbius/cover.webp', 'zen-barefoot': 'assets/zen/shoe-1.jpg' };
 
   /* ---------- opening ---------- */
   const coverSrc = covers[p.slug] || p.cover;
@@ -41,15 +42,13 @@
       <a class="cs-back" href="work.html">${back}<span>All work</span></a>
       <div class="cs-hero__grid">
         <div class="cs-hero__text">
-          <div class="cs-hero__top">
-            <span class="cs-emblem">${emblem(p.slug)}</span>
-            <p class="cs-kicker">${clean(p.kicker)}${p.status ? ` <span class="cs-status">${p.status}</span>` : ''}</p>
-          </div>
+          <p class="cs-eyebrow"><span>${String(p.client).split(/,|\(/)[0].trim()}</span><span>${p.year}</span>${p.status ? `<span class="cs-eyebrow__status">${p.status}</span>` : ''}</p>
           <h1 class="cs-title">${p.title}</h1>
           <p class="cs-line">${p.oneLiner}</p>
           <p class="cs-summary">${p.summary}</p>
+          <p class="cs-cats">${String(p.kicker).split('·').map((x) => `<span>${x.trim()}</span>`).join('')}</p>
         </div>
-        <figure class="cs-cover">${coverSrc ? `<span class="fit-bg" style="background-image:url('${D.asset(coverSrc)}')" aria-hidden="true"></span><img src="${D.asset(coverSrc)}" alt="${p.title}, campaign visual" />` : `<div class="cs-cover__type">${p.coverText || p.title}</div>`}</figure>
+        <figure class="cs-cover${p.bookCover ? ' cs-cover--book' : ''}${p.coverLight ? ' cs-cover--light' : ''}">${p.bookCover ? bookCover(p) : coverSrc ? `<span class="fit-bg" style="background-image:url('${D.asset(coverSrc)}')" aria-hidden="true"></span><img src="${D.asset(coverSrc)}" alt="${p.title}, campaign visual" />` : `<div class="cs-cover__type">${p.coverText || p.title}</div>`}</figure>
       </div>
       ${meta.length ? `<dl class="cs-meta">${meta.map(([k, v]) => `<div><dt>${k}</dt><dd>${clean(v)}</dd></div>`).join('')}</dl>` : ''}
       ${stats.length ? `<ul class="cs-stats">${stats.map(([b, t]) => `<li><b>${b}</b><span>${t}</span></li>`).join('')}</ul>` : ''}
@@ -117,13 +116,16 @@
       <div><h4 class="owned__h">With the team</h4><ul class="owned__list">${team.map(card).join('')}</ul></div>
     </div>`;
   }
+function logoWall(s) {
+  return `<div class="unis"><ul class="unis__wall">${s.logos.map(([k, name]) => `<li class="unis__t unis__t--${k}"><img src="${D.asset(`assets/gradright/uni-${k}.png`)}" alt="${name}" loading="lazy" /></li>`).join('')}</ul>${s.logosNote ? `<p class="unis__note">${s.logosNote}</p>` : ''}</div>`;
+}
 function gallery(s) {
   const media = s.media || [], cap = s.captions || [], fit = s.contain || [];
   if (!media.length) return '';
   const fig = (i) => `<img src="${D.asset(media[i])}" alt="${cap[i] || p.title}" ${fit.includes(i) ? 'class="is-contain"' : ''} />`;
   return `<div class="cs-gallery cs-gallery--${Math.min(media.length, 5)}${s.tall ? " cs-gallery--tall" : ""}">
     <figure class="cs-gal__main">${fig(0)}<figcaption>${cap[0] || ''}</figcaption></figure>
-    ${media.length > 1 ? `<div class="cs-gal__thumbs">${media.map((m, i) => `<button class="cs-gal__t${i === 0 ? ' is-on' : ''}" data-i="${i}" aria-label="Show: ${cap[i] || 'image ' + (i + 1)}" aria-pressed="${i === 0}"><img src="${D.asset(m)}" alt="" loading="lazy" /></button>`).join('')}</div>` : ''}
+    ${media.length > 1 ? `<div class="cs-gal__thumbs">${media.map((m, i) => `<button class="cs-gal__t${i === 0 ? ' is-on' : ''}${fit.includes(i) ? ' is-light' : ''}" data-i="${i}" aria-label="Show: ${cap[i] || 'image ' + (i + 1)}" aria-pressed="${i === 0}"><img src="${D.asset(m)}" alt="" loading="lazy" /></button>`).join('')}</div>` : ''}
   </div>`;
 }
 // a tile swaps into the large frame
@@ -189,6 +191,80 @@ document.addEventListener('click', (e) => {
   box.querySelector('.cs-lb__x').focus();
 });
 
+// a sealed project: a lock, a countdown to the unveiling, nothing of the work itself
+function locked(s) {
+  return `<div class="cs-lock" data-unlock="${s.unlock}">
+    <div class="cs-lock__seal" aria-hidden="true"><svg viewBox="0 0 64 64"><rect x="14" y="28" width="36" height="26" rx="6"/><path d="M22 28v-7a10 10 0 0 1 20 0v7"/><circle cx="32" cy="40" r="3"/><path d="M32 43v4"/></svg></div>
+    <p class="cs-lock__k">Unlocks after the parade</p>
+    <ol class="cs-lock__count" aria-label="Time until the unveiling">
+      <li><b data-u="d">--</b><span>days</span></li><li><b data-u="h">--</b><span>hours</span></li><li><b data-u="m">--</b><span>minutes</span></li><li><b data-u="s">--</b><span>seconds</span></li>
+    </ol>
+    <a class="btn-iri" href="mailto:${D.EMAIL}?subject=${encodeURIComponent('Tell me when Sena Diwas 2027 is unveiled')}"><span>Tell me when it's out</span><i aria-hidden="true">${star}</i></a>
+  </div>`;
+}
+
+// a story section: the words carry it, with one warm link out
+function storyLink(s) {
+  return s.link ? `<a class="btn-iri cs-story__link" href="${s.link[0]}" target="_blank" rel="noopener"><span>${s.link[1]}</span><i aria-hidden="true">${star}</i></a>` : '';
+}
+
+// a closed hardcover, in 3D
+function bookCover(q) {
+  if (q.bookImg) return `<div class="bk bk--img" aria-label="${q.title}, the book"><div class="bk__front"><img src="${D.asset(q.bookImg)}" alt="${q.title} cover" /></div><div class="bk__pages"></div><div class="bk__spine"></div></div>`;
+  return `<div class="bk" aria-label="${q.title}, the book"><div class="bk__front"><span class="bk__k">A research document</span><b>${q.title}</b><span class="bk__s">Three futures, decoded</span><span class="bk__foot">Escapient · Culture Core · Metro-ceptive</span></div><div class="bk__pages"></div><div class="bk__spine"></div></div>`;
+}
+// flip book: each leaf has a front (right page) and a back (left page once turned)
+const ART = {
+  1: '<svg viewBox="0 0 200 200"><circle cx="100" cy="110" r="62" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="100" cy="110" r="40" fill="none" stroke="currentColor" stroke-width="1"/><path d="M20 150c40-30 120-30 160 0" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="138" cy="62" r="10" fill="currentColor"/></svg>',
+  2: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M40 160V60l60-30 60 30v100z"/><path d="M70 160V80h60v80"/><path d="M40 60h120M100 30v130"/></g><circle cx="100" cy="110" r="8" fill="currentColor"/></svg>',
+  3: '<svg viewBox="0 0 200 200"><g fill="none" stroke="currentColor" stroke-width="1"><path d="M30 170V90h30v80M70 170V50h28v120M108 170V70h26v100M144 170V110h26v60"/><path d="M20 170h160"/></g><path d="M30 40c30 10 60-10 90 0s50 10 60 0" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>'
+};
+function pageHTML(pg, q) {
+  switch (pg.kind) {
+    case 'cover': return `<div class="fp fp--cover"><span class="bk__k">A research document</span><b>${q.title}</b><span class="bk__s">Three futures, decoded</span><span class="bk__foot">Escapient · Culture Core · Metro-ceptive</span></div>`;
+    case 'backcover': return `<div class="fp fp--cover fp--back"><span class="bk__k">${q.title}</span><span class="bk__s">Research and design by Spandita Jakhar, Neelam, Apurva and Arundhati Mitra</span><span class="bk__foot">${q.year}</span></div>`;
+    case 'contents': return `<div class="fp"><span class="fp__k">Contents</span><ol class="fp__toc"><li><i>01</i>Setting the backdrop</li><li><i>02</i>First story: Escapient</li><li><i>03</i>Second story: Culture Core</li><li><i>04</i>Third story: Metro-ceptive</li><li><i>05</i>Annexure</li></ol></div>`;
+    case 'chapter': return `<div class="fp"><span class="fp__n">${pg.n}</span><h4 class="fp__t">${pg.t}</h4><p class="fp__p">${pg.p}</p></div>`;
+    case 'list': return `<div class="fp"><span class="fp__k">${pg.t}</span><ul class="fp__list">${pg.items.map((x) => `<li>${x}</li>`).join('')}</ul></div>`;
+    case 'story': return `<div class="fp fp--story"><span class="fp__k">${pg.k}</span><div class="fp__art">${ART[pg.art] || ''}</div><h4 class="fp__t fp__t--big">${pg.t}</h4><span class="fp__n">${pg.n}</span></div>`;
+    case 'carries': return `<div class="fp"><span class="fp__k">Inside ${pg.t}</span><ul class="fp__list"><li>Palettes</li><li>Textures</li><li>Imagery</li><li>Scenario possibilities</li></ul></div>`;
+    case 'endpaper': return '<div class="fp fp--end"></div>';
+    default: return pg.img ? `<img src="${D.asset(pg.img)}" alt="" loading="lazy" decoding="async" />` : '';
+  }
+}
+// the three trends, each with a way back into the book
+function trendCards(s) {
+  return `<div class="tr">${s.trends.map((t, i) => `
+    <article class="tr__c">
+      <button class="tr__img" data-zoom="${D.asset(t.img)}" data-cap="${t.name}: ${t.line}" aria-label="Enlarge the ${t.name} page"><img src="${D.asset(t.img)}" alt="${t.name} opening page" loading="lazy" /></button>
+      <div class="tr__body">
+        <span class="tr__n">${String(i + 1).padStart(2, '0')}</span>
+        <h3 class="tr__name">${t.name}</h3>
+        <p class="tr__line">${t.line}</p>
+        <ol class="tr__micro">${t.micro.map((m) => `<li>${m}</li>`).join('')}</ol>
+        <dl class="tr__dl"><div><dt>Drivers</dt><dd>${t.drivers}</dd></div><div><dt>${t.seenLabel || 'Seen in'}</dt><dd>${t.seen}</dd></div></dl>
+        <button class="tr__go" data-fbto="${t.to}">Read it in the book <i aria-hidden="true">${star}</i></button>
+      </div>
+    </article>`).join('')}</div>`;
+}
+// the people who made it
+function team(s) {
+  const ini = (n) => n.split(' ').map((w) => w[0]).join('');
+  return `<ul class="tm">${s.people.map(([name, img, link, via, me]) => `
+    <li class="tm__p${me ? ' is-me' : ''}"><a href="${link}" target="_blank" rel="noopener">
+      <span class="tm__ph">${img ? `<img src="${D.asset(img)}" alt="${name}" loading="lazy" />` : `<i>${ini(name)}</i>`}</span>
+      <b>${name}${me ? ' <em>(me)</em>' : ''}</b><span class="tm__via">${via} <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+    </a></li>`).join('')}</ul>`;
+}
+function flipbook(s) {
+  const L = s.leaves || [];
+  return `<div class="fb" tabindex="0" aria-label="Trend book. Use the arrow keys to turn the pages.">
+    <div class="fb__book is-closed" data-n="${L.length}">${L.map((lf, i) => `<div class="fb__leaf" style="--i:${i};--n:${L.length}"><div class="fb__side fb__side--front">${pageHTML(lf.front, p)}</div><div class="fb__side fb__side--back">${pageHTML(lf.back, p)}</div></div>`).join('')}</div>
+    <div class="fb__ui"><button class="fb__btn" data-fb="-1" aria-label="Previous page">${back}</button><span class="fb__pos" aria-live="polite">Cover</span><button class="fb__btn" data-fb="1" aria-label="Next page">${arrowR}</button><button class="fb__btn fb__zoom" data-zoom="" data-cap="" aria-label="Read this page up close"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></svg></button></div>
+    ${s.chapters ? `<div class="fb__chap" role="group" aria-label="Jump to a chapter">${s.chapters.map(([t, n]) => `<button data-fbto="${n}">${t}</button>`).join('')}</div>` : ''}
+  </div>`;
+}
+
   const builder = p.builder && window.CASE_BUILDERS && window.CASE_BUILDERS[p.builder];
   const customSections = builder ? builder.sections.map((s, i) => `
     <section class="cs-sec ${s.quote ? 'cs-sec--quote' : ''} ${s.ai ? 'cs-sec--ai' : ''}" id="${s.id}" data-nav="${s.nav}">
@@ -204,10 +280,15 @@ document.addEventListener('click', (e) => {
       case 'beats': extra = beats(s); break;
       case 'markets': extra = markets(s); break;
       case 'chips': extra = chips(s); break;
-      case 'gallery': extra = gallery(s); break;
+      case 'gallery': extra = (s.logos ? logoWall(s) : '') + gallery(s); break;
       case 'videos': extra = videos(s); break;
       case 'rally': extra = rally(s); break;
       case 'process': extra = processWall(s); break;
+      case 'locked': extra = locked(s); break;
+      case 'story': extra = storyLink(s); break;
+      case 'flipbook': extra = flipbook(s); break;
+      case 'trends': extra = trendCards(s); break;
+      case 'team': extra = team(s); break;
       case 'screens': extra = screens(s); break;
       case 'checklist': extra = checklist(s); break;
     }
@@ -229,7 +310,9 @@ document.addEventListener('click', (e) => {
         <p class="cs-ai__tag">${star}<span>How AI fits in</span></p>
         <h2 class="cs-h">${p.ai.title}</h2>
         <p class="cs-ai__body">${p.ai.body}</p>
-        ${p.ai.steps ? `<ol class="pipe">${p.ai.steps.map(([t, d], i) => `<li style="--i:${i}"><span class="pipe__node">${String(i + 1).padStart(2, '0')}</span><b>${stepName(t)}</b><p>${clean(d)}</p></li>`).join('')}</ol>` : ''}
+        ${p.ai.steps ? `<ol class="pipe" style="--n:${p.ai.steps.length}">${p.ai.steps.map(([t, d], i) => `<li style="--i:${i}"><span class="pipe__node">${String(i + 1).padStart(2, '0')}</span><b>${stepName(t)}</b><p>${clean(d)}</p></li>`).join('')}</ol>` : ''}
+        ${p.ai.tools ? `<p class="cs-ai__tools"><span>Tools</span>${p.ai.tools.map((t) => `<b>${t}</b>`).join('')}</p>` : ''}
+        ${p.ai.human ? `<p class="cs-ai__human">${star}<span>${p.ai.human}</span></p>` : ''}
         ${todo(p.ai.todo)}
       </div>
     </section>` : '';
@@ -331,13 +414,54 @@ addEventListener('resize', fitTitle);
     bts.forEach((b) => bio.observe(b));
   }
 
+// flip book: turn leaves; the book slides so a closed cover sits centred
+$$('.fb').forEach((fb) => {
+  const book = $('.fb__book', fb), leaves = $$('.fb__leaf', fb), pos = $('.fb__pos', fb), n = leaves.length;
+  let cur = 0;
+  const label = () => (cur === 0 ? 'Cover' : cur === n ? 'Back cover' : `Spread ${cur} of ${n - 1}`);
+  const render = () => {
+    leaves.forEach((lf, i) => { lf.classList.toggle('is-turned', i < cur); lf.style.zIndex = i < cur ? i + 1 : n - i + n; });
+    book.classList.toggle('is-closed', cur === 0); book.classList.toggle('is-end', cur === n);
+    pos.textContent = label();
+    const zi = Math.min(cur, n - 1), zimg = cur === n ? $('.fb__side--back img', leaves[n - 1]) : $('.fb__side--front img', leaves[zi]);
+    const zb = $('.fb__zoom', fb); if (zb) { zb.dataset.zoom = zimg ? zimg.src : ''; zb.disabled = !zimg; }
+    $$('[data-fbto]', fb).forEach((b) => b.classList.toggle('is-on', +b.dataset.fbto === cur));
+    $('[data-fb="-1"]', fb).disabled = cur === 0; $('[data-fb="1"]', fb).disabled = cur === n;
+  };
+  const go = (dir) => { const nx = Math.max(0, Math.min(n, cur + dir)); if (nx !== cur) { cur = nx; render(); } };
+  $$('.fb__btn', fb).forEach((b) => b.addEventListener('click', () => go(+b.dataset.fb)));
+  leaves.forEach((lf, i) => {
+    $('.fb__side--front', lf).addEventListener('click', () => { if (i === cur) go(1); });
+    $('.fb__side--back', lf).addEventListener('click', () => { if (i === cur - 1) go(-1); });
+  });
+  fb._goto = (k) => { cur = Math.max(0, Math.min(n, k)); render(); };
+  $$('[data-fbto]', fb).forEach((b) => b.addEventListener('click', () => fb._goto(+b.dataset.fbto)));
+  fb.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } });
+  render();
+});
+
+// a trend card opens the book at its chapter
+$$('.tr__go').forEach((b) => b.addEventListener('click', () => { const fb = $('.fb'); if (!fb) return; D.scrollTo ? D.scrollTo(fb.closest('.cs-sec')) : fb.scrollIntoView({ behavior: 'smooth' }); setTimeout(() => fb._goto(+b.dataset.fbto), 700); }));
+
+// countdown on a sealed project
+$$('.cs-lock').forEach((box) => {
+  const t = new Date(box.dataset.unlock).getTime(), u = (k) => $(`[data-u="${k}"]`, box);
+  const tick = () => {
+    let s = Math.max(0, Math.floor((t - Date.now()) / 1000));
+    if (!s) { $('.cs-lock__k', box).textContent = 'Unveiled. The story is on its way.'; }
+    const d = Math.floor(s / 86400); s -= d * 86400; const h = Math.floor(s / 3600); s -= h * 3600; const m = Math.floor(s / 60); s -= m * 60;
+    u('d').textContent = d; u('h').textContent = String(h).padStart(2, '0'); u('m').textContent = String(m).padStart(2, '0'); u('s').textContent = String(s).padStart(2, '0');
+  };
+  tick(); setInterval(tick, 1000);
+});
+
   // the chart grows in when it arrives
   const ch = $('.cs-chart');
   if (ch) new IntersectionObserver((ents, o) => ents.forEach((e) => { if (e.isIntersecting) { ch.classList.add('is-in'); o.disconnect(); } }), { threshold: .35 }).observe(ch);
 
   // motion
   if (hasG && !reduce) {
-    gsap.from('.cs-back, .cs-hero__top', { y: 16, opacity: 0, duration: .9, ease: 'expo.out', stagger: .08, delay: .1 });
+    gsap.from('.cs-back, .cs-eyebrow', { y: 16, opacity: 0, duration: .9, ease: 'expo.out', stagger: .08, delay: .1 });
     D.scramble($('.cs-title'), { duration: 1 });
     gsap.from('.cs-line, .cs-summary', { y: 20, opacity: 0, filter: 'blur(8px)', duration: 1.1, ease: 'expo.out', stagger: .1, delay: .35, clearProps: 'filter' });
     gsap.fromTo('.cs-cover', { clipPath: 'inset(40% 20% 40% 20% round 24px)' }, { clipPath: 'inset(0% 0% 0% 0% round 24px)', duration: 1.6, ease: 'expo.inOut', delay: .2 });

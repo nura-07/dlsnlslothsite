@@ -108,29 +108,41 @@
     out.onfinish = () => { out.cancel(); el.dataset.final = next; el.textContent = next; scramble(el, { duration: .7 }); };
   }
   
-  /* ---------- loader (once per visit): a liquid star breathes inside a
-     ring that fills; then the star blooms and the page appears through it ---------- */
-  const loader = $('#loader');
-  const seen = (() => { try { return sessionStorage.getItem('dlsnl-seen') === '1'; } catch (e) { return false; } })();
-  function runLoader() {
-    return new Promise((done) => {
-      if (!loader || seen || reduce || !hasG || location.hash) { document.documentElement.classList.add('no-loader'); loader && loader.remove(); return done(false); }
-      document.body.classList.add('is-loading');
-      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-      window.scrollTo(0, 0);
-      scramble($('.loader__line', loader), { duration: 1.2, delay: .2 });
-      const num = $('#loaderNum'), fill = $('#loaderFill'); const o = { n: 0 };
-      gsap.timeline({ onComplete: () => { try { sessionStorage.setItem('dlsnl-seen', '1'); } catch (e) {} } })
-        .from('.loader__core', { scale: .6, opacity: 0, duration: 1, ease: 'expo.out' }, 0)
-        .from('.loader__corner', { opacity: 0, y: 8, duration: .8, stagger: .1 }, .3)
-        .to(o, { n: 100, duration: 2.1, ease: 'power2.inOut', onUpdate: () => { num.textContent = Math.round(o.n); fill.style.strokeDashoffset = 1 - o.n / 100; } }, .2)
-        .to('.loader__line, .loader__count, .loader__corner, .loader__ring', { opacity: 0, filter: 'blur(8px)', duration: .45, ease: 'power2.in' }, '-=.1')
-        .to('.loader__star', { scale: 34, rotate: 200, duration: 1.15, ease: 'expo.in' }, '<')
-        .call(() => done(true), null, '-=.3')
-        .to(loader, { opacity: 0, filter: 'blur(24px)', duration: .8, ease: 'power2.out', onComplete: () => { loader.remove(); document.body.classList.remove('is-loading'); } }, '-=.35');
-    });
-  }
-  
+/* ---------- loader (once per visit): the two-star sparkle draws itself in
+   iridescent light, fills, a few words keep time with a hairline bar, then
+   the page opens through a star-shaped window ---------- */
+const loader = $('#loader');
+const seen = (() => { try { return sessionStorage.getItem('dlsnl-seen') === '1'; } catch (e) { return false; } })();
+function runLoader() {
+  return new Promise((done) => {
+    if (!loader || seen || reduce || !hasG || location.hash) { document.documentElement.classList.add('no-loader'); loader && loader.remove(); return done(false); }
+    document.body.classList.add('is-loading');
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    const word = $('#loaderWord'), num = $('#loaderNum'), bar = $('#loaderBar');
+    const WORDS = [[0, 'Dreaming it up'], [.34, 'Drawing it out'], [.68, 'Polishing'], [.98, 'Here it is']];
+    let wi = 0; const o = { p: 0 };
+    scramble(word, { duration: .9, delay: .2 });
+    gsap.timeline({ onComplete: () => { try { sessionStorage.setItem('dlsnl-seen', '1'); } catch (e) {} } })
+      .fromTo('.lm', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut', stagger: .25 }, .1)
+      .to('.lm', { fillOpacity: 1, duration: .8, ease: 'power1.out', stagger: .15 }, 1.1)
+      .fromTo('.lm--small', { rotate: -90, scale: .4, transformOrigin: '50% 50%' }, { rotate: 0, scale: 1, duration: 1.2, ease: 'back.out(2)' }, .5)
+      .from('.loader__corner', { opacity: 0, y: 8, duration: .8, stagger: .1 }, .3)
+      .to(o, { p: 1, duration: 2.3, ease: 'power2.inOut', onUpdate: () => {
+        num.textContent = Math.round(o.p * 100); bar.style.transform = `scaleX(${o.p})`;
+        if (wi < WORDS.length - 1 && o.p >= WORDS[wi + 1][0]) { wi++; swapText(word, WORDS[wi][1]); }
+      } }, .2)
+      .to('.loader__mark', { scale: 1.08, duration: .35, ease: 'power2.out' })
+      .to('.loader__word, .loader__corner, .loader__bar', { opacity: 0, y: -6, duration: .4, ease: 'power2.in' }, '<')
+      .set(loader, { '--hole': '0px' })
+      .add(() => loader.classList.add('is-out'))
+      .to('.loader__mark', { scale: 3.2, opacity: 0, duration: .9, ease: 'expo.in' })
+      .to(loader, { '--hole': '320vmax', duration: 1.1, ease: 'expo.in' }, '<.1')
+      .call(() => done(true), null, '-=.45')
+      .add(() => { loader.remove(); document.body.classList.remove('is-loading'); });
+  });
+}
+
   /* ---------- smooth scroll ---------- */
   let lenis = null;
   if (window.Lenis && !reduce) {
@@ -158,23 +170,48 @@
     lastY = y;
   }, { passive: true });
 
-  /* ---------- menu ---------- */
-  const burger = $('#burger'), menu = $('#menu');
-  function openMenu() {
-    menu.hidden = false; requestAnimationFrame(() => menu.classList.add('is-open'));
-    burger.setAttribute('aria-expanded', 'true'); burger.querySelector('.burger__label').textContent = 'Close';
-    document.body.classList.add('menu-open'); lenis && lenis.stop();
-    if (hasG && !reduce) {
-      gsap.from($$('.menu__links li', menu), { y: 40, opacity: 0, filter: 'blur(10px)', duration: 1, ease: 'expo.out', stagger: .07, delay: .15, clearProps: 'filter' });
-      gsap.from($$('.menu__card, .menu__star', menu), { y: 30, opacity: 0, duration: 1.1, ease: 'expo.out', delay: .35 });
-    }
-  }
-  function closeMenu() {
-    if (!menu || !menu.classList.contains('is-open')) return;
-    menu.classList.remove('is-open'); burger.setAttribute('aria-expanded', 'false'); burger.querySelector('.burger__label').textContent = 'Menu';
-    document.body.classList.remove('menu-open'); lenis && lenis.start();
-    setTimeout(() => { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 800);
-  }
+/* ---------- menu ----------
+   Two veils sweep across (a pastel iridescent one, then a dark one),
+   and the menu is waiting underneath when they lift. Only transforms
+   and opacity move, so nothing flickers. */
+const burger = $('#burger'), menu = $('#menu');
+let veils = null, menuTl = null;
+if (menu) {
+  veils = document.createElement('div');
+  veils.className = 'veils'; veils.setAttribute('aria-hidden', 'true');
+  veils.innerHTML = '<i class="veil veil--iri"></i><i class="veil veil--dark"></i>';
+  document.body.appendChild(veils);
+}
+function openMenu() {
+  burger.setAttribute('aria-expanded', 'true'); burger.querySelector('.burger__label').textContent = 'Close';
+  document.body.classList.add('menu-open'); lenis && lenis.stop();
+  menuTl && menuTl.kill();
+  if (!hasG || reduce) { menu.hidden = false; menu.classList.add('is-open'); return; }
+  const v = $$('.veil', veils), items = $$('.menu__links li, .menu__card', menu);
+  menuTl = gsap.timeline()
+    .set(v, { transformOrigin: '50% 0%', scaleY: 0 })
+    .to(v, { scaleY: 1, duration: .6, ease: 'expo.inOut', stagger: .13 })
+    .add(() => { menu.hidden = false; menu.classList.add('is-open'); })
+    .set(v, { transformOrigin: '50% 100%' })
+    .fromTo(items, { y: 46, opacity: 0 }, { y: 0, opacity: 1, duration: .9, ease: 'expo.out', stagger: .06 })
+    .to(v.slice().reverse(), { scaleY: 0, duration: .6, ease: 'expo.inOut', stagger: .06 }, '<-.05');
+}
+function closeMenu() {
+  if (!menu || !menu.classList.contains('is-open')) return;
+  burger.setAttribute('aria-expanded', 'false'); burger.querySelector('.burger__label').textContent = 'Menu';
+  document.body.classList.remove('menu-open'); lenis && lenis.start();
+  menuTl && menuTl.kill();
+  const finish = () => { menu.classList.remove('is-open'); menu.hidden = true; };
+  if (!hasG || reduce) return finish();
+  const v = $$('.veil', veils);
+  menuTl = gsap.timeline()
+    .to($$('.menu__links li, .menu__card', menu), { y: -24, opacity: 0, duration: .3, ease: 'power2.in', stagger: .03 })
+    .set(v, { transformOrigin: '50% 100%' }, 0)
+    .to(v, { scaleY: 1, duration: .5, ease: 'expo.inOut', stagger: .07 }, .1)
+    .add(finish)
+    .set(v, { transformOrigin: '50% 0%' })
+    .to(v.slice().reverse(), { scaleY: 0, duration: .55, ease: 'expo.inOut', stagger: .06 });
+}
   burger && burger.addEventListener('click', () => (menu.classList.contains('is-open') ? closeMenu() : openMenu()));
   addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
 
@@ -186,7 +223,9 @@ const music = $('#music'), sound = $('#sound');
 if (music && sound) {
   music.volume = 0;
   const label = $('.sound__label', sound);
-  const set = (on) => { sound.setAttribute('aria-pressed', on); label.textContent = on ? 'Sound on' : 'Sound off'; sound.setAttribute('aria-label', on ? 'Pause background music' : 'Play background music'); };
+  // a music note when it's off (with a soft strike), dancing bars when it plays
+  if (!$('.sound__note', sound)) sound.insertAdjacentHTML('afterbegin', '<svg class="sound__note" viewBox="0 0 24 24" aria-hidden="true"><path class="sound__notehead" d="M9 18.5a2.6 2.6 0 1 1-5.2 0 2.6 2.6 0 0 1 5.2 0Zm11-2.2a2.6 2.6 0 1 1-5.2 0 2.6 2.6 0 0 1 5.2 0Z"/><path class="sound__stem" d="M9 18.5V6.2l11-2.4v12.5M9 9.6l11-2.4"/><path class="sound__strike" d="M3.5 3.5l17 17"/></svg>');
+  const set = (on) => { sound.setAttribute('aria-pressed', on); sound.classList.add('was-set'); label.textContent = on ? 'Music on' : 'Play music'; sound.setAttribute('aria-label', on ? 'Pause background music' : 'Play background music'); };
   const store = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
   const read = (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } };
   const fadeTo = (v, done) => (hasG ? gsap.to(music, { volume: v, duration: v ? 1.5 : .6, onComplete: done }) : ((music.volume = v), done && done()));
@@ -196,6 +235,7 @@ if (music && sound) {
     return music.play().then(() => { set(true); fadeTo(.5); store('dlsnl-sound', '1'); });
   };
   sound.addEventListener('click', () => {
+    sound.classList.add('is-tried');
     if (music.paused) play().catch(() => toast('The music could not start. Try again.'));
     else { set(false); fadeTo(0, () => music.pause()); store('dlsnl-sound', '0'); }
   });
@@ -456,6 +496,121 @@ if (music && sound) {
     });
     im.src = url;
   });
+
+  /* ---------- footer: a sky of tiny four-point stars that wake up around the pointer,
+     the same turn-and-grow sparkle the work rows use on hover ---------- */
+  (function footerSky() {
+    const ftr = $('.ftr'); if (!ftr) return;
+    // the closing line: each word lifts and turns iridescent as you pass it
+    const say = $('.ftr__say', ftr);
+    if (say && !say.dataset.split) {
+      say.dataset.split = '1';
+      say.innerHTML = say.innerHTML.split(/(<br\s*\/?>)/).map((part) => /^<br/.test(part) ? part : part.split(/(\s+)/).map((w) => (/^\s*$/.test(w) ? w : `<span class="ftr__w">${w}</span>`)).join('')).join('');
+      if (fine) $$('.ftr__w', say).forEach((w) => w.addEventListener('mouseenter', () => { const r = w.getBoundingClientRect(); sparks(r.left + r.width / 2, r.top + r.height * .3, 4, 34); }));
+    }
+    // footer links get the row sparkle
+    $$('.ftr ul a').forEach((a) => { if (!a.querySelector('.ftr__spk')) a.insertAdjacentHTML('afterbegin', `<svg class="ftr__spk" viewBox="0 0 100 100" aria-hidden="true"><path d="${STAR}"/></svg>`); });
+
+    // a tiny evil eye signs off the page; it glances toward the pointer
+    const base = $('.ftr__base', ftr);
+    if (base && !$('.nazar', base)) {
+      base.insertAdjacentHTML('beforeend', '<span class="nazar" role="img" aria-label="A tiny evil eye, for luck"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="#1B3FA6"/><circle cx="20" cy="20" r="13.5" fill="#F5F7FF"/><g class="nazar__iris"><circle cx="20" cy="20" r="9" fill="#5FB7F0"/><circle cx="20" cy="20" r="4.6" fill="#0B0A12"/><circle cx="18.2" cy="18.2" r="1.3" fill="#fff"/></g></svg></span>');
+      const eye = $('.nazar', base), iris = $('.nazar__iris', base);
+      if (fine && !reduce) addEventListener('pointermove', (e) => {
+        const r = eye.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+        const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy) || 1, k = Math.min(3.2, d / 40);
+        iris.style.transform = `translate(${dx / d * k}px, ${dy / d * k}px)`;
+      }, { passive: true });
+    }
+    const cv = document.createElement('canvas'); cv.className = 'ftr__sky'; cv.setAttribute('aria-hidden', 'true');
+    ftr.prepend(cv);
+    const cx = cv.getContext('2d');
+    const star = new Path2D(STAR);
+    let W = 0, H = 0, dpr = 1, stars = [], px = -999, py = -999, on = false, raf = 0, t0 = performance.now();
+    const build = () => {
+      const r = ftr.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1);
+      W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr;
+      const gap = W < 700 ? 38 : 48; stars = [];
+      for (let y = gap / 2; y < H; y += gap) for (let x = gap / 2; x < W; x += gap) {
+        stars.push({ x: x + (Math.random() - .5) * gap * .8, y: y + (Math.random() - .5) * gap * .8, s: 3.5 + Math.random() * 4, k: 0, rot: Math.random() * 6.28, ph: Math.random() * 6.28, c: IRI[(Math.random() * IRI.length) | 0] });
+      }
+    };
+    const draw = (now) => {
+      raf = on ? requestAnimationFrame(draw) : 0;
+      const t = (now - t0) / 1000;
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, W, H);
+      for (const p of stars) {
+        const d = Math.hypot(p.x - px, p.y - py), want = d < 200 ? Math.pow(1 - d / 200, 1.4) : 0;
+        p.k += (want - p.k) * .12;
+        const tw = .5 + .5 * Math.sin(t * 1.3 + p.ph);                 // a slow twinkle on its own
+        const size = p.s * (1 + p.k * 4.5) * (.75 + tw * .4);
+        const a = .18 + tw * .3 + p.k * .9;
+        cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot + p.k * 1.6 + t * .08);
+        cx.scale(size / 100, size / 100); cx.translate(-50, -50);
+        cx.globalAlpha = Math.min(1, a); cx.fillStyle = p.k > .05 ? p.c : '#ECEAF3';
+        if (p.k > .3) { cx.shadowColor = p.c; cx.shadowBlur = 40; }
+        cx.fill(star); cx.restore();
+      }
+    };
+    const start = () => { if (!raf && !reduce) raf = requestAnimationFrame(draw); };
+    build();
+    if (reduce) { on = true; draw(performance.now()); on = false; }
+    new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) start(); }).observe(ftr);
+    new ResizeObserver(() => { build(); if (!on) draw(performance.now()); }).observe(ftr);
+    const move = (e) => { const r = ftr.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; };
+    ftr.addEventListener('pointermove', move, { passive: true });
+    ftr.addEventListener('pointerdown', move, { passive: true });
+    ftr.addEventListener('pointerleave', () => { px = py = -999; });
+  })();
+
+  /* ---------- swipe hints: anything that scrolls sideways says so, quietly.
+     Rails get a thin progress line with "Swipe" under them; short rows
+     (tabs, chips, the sticker sheet) get a soft fade on the edge with more ---------- */
+  (function swipeHints() {
+    const SKIP = '.brands, .brands *, .menu, .menu *, .loader, .loader *, .fb, .fb *';
+    const ARROW = '<svg viewBox="0 0 24 12"><path d="M1 6h20M16 1l5 5-5 5"/></svg>';
+    const hinted = new Map();
+    const update = (el) => {
+      const h = hinted.get(el); if (!h) return;
+      if (!h.bar && el.getBoundingClientRect().height > 100) addBar(el, h);
+      const max = el.scrollWidth - el.clientWidth, x = el.scrollLeft, over = max > 8;
+      el.classList.toggle('swipe-l', over && x > 6);
+      el.classList.toggle('swipe-r', over && x < max - 6);
+      if (h.bar) {
+        h.bar.hidden = !over;
+        const vis = el.clientWidth / el.scrollWidth;
+        h.thumb.style.width = (vis * 100).toFixed(1) + '%';
+        h.thumb.style.transform = `translateX(${(max > 0 ? x / max : 0) * (1 / vis - 1) * 100}%)`;
+        h.bar.classList.toggle('is-end', x >= max - 6);
+      }
+    };
+    const addBar = (el, h) => {
+      el.classList.add('swipe-x--rail');
+      el.insertAdjacentHTML('afterend', `<div class="swipe" aria-hidden="true"><span class="swipe__track"><i></i></span><span class="swipe__label">Swipe</span>${ARROW}</div>`);
+      h.bar = el.nextElementSibling; h.thumb = h.bar.querySelector('i');
+    };
+    const attach = (el) => {
+      if (hinted.has(el)) return update(el);
+      const h = {};
+      el.classList.add('swipe-x');
+      hinted.set(el, h);
+      if (window.ResizeObserver) new ResizeObserver(() => update(el)).observe(el);
+      el.addEventListener('scroll', () => { update(el); if (h.bar && el.scrollLeft > 20) h.bar.classList.add('is-used'); }, { passive: true });
+      update(el);
+    };
+    const scan = () => {
+      $$('main *, .cs-jump *').forEach((el) => {
+        if (hinted.has(el)) return update(el);
+        if (el.closest(SKIP)) return;
+        const ox = getComputedStyle(el).overflowX;
+        if ((ox === 'auto' || ox === 'scroll') && el.scrollWidth > el.clientWidth + 8 && el.clientHeight > 20) attach(el);
+      });
+    };
+    let t; const later = () => { clearTimeout(t); t = setTimeout(scan, 250); };
+    addEventListener('load', () => { scan(); setTimeout(scan, 1500); setTimeout(scan, 4000); });
+    addEventListener('resize', later);
+    setTimeout(scan, 600);
+  })();
 
   window.DLSNL = { asset, EMAIL, STAR, IRI, sparks, star: starState, logoURL, reduce, fine, hasG, lenis, toast, scramble, swapText, runLoader, tintLogo, scrollTo, $, $$ };
 })();

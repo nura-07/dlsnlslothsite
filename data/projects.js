@@ -8,6 +8,7 @@
 (function () {
   const FR = (id, s = 2048) => `https://framerusercontent.com/images/${id}?scale-down-to=${s}`;
 
+  const TB = (n) => `assets/trend/page-${String(n).padStart(2, '0')}.jpg`; // Trendbook 2021 pages
   const projects = [
     /* ------------------------------------------------ HERBIUS */
     {
@@ -110,7 +111,7 @@
       accent: '#5a7a3a', crateLabel: 'ZEN BAREFOOT / D2C',
       cover: FR('LyqedAxO0iYOikpYE6FYk0cr0SY.jpg', 1024),
       tags: ['Brand identity', 'Packaging', 'Merchandise', 'Guidelines'],
-      meta: { Role: 'Brand designer, research to execution', Timeline: '2024', Scope: 'Research, logo, colour, type, patterns, packaging, merch, footwear details', Reach: '12K Instagram followers', Output: '25-page brand guideline' },
+      meta: { Role: 'Brand designer, research to execution', Timeline: '2024', Scope: 'End-to-end brand system, from research to production-ready files', Reach: '12K Instagram followers', Output: 'Research, logo, colour, type, patterns, packaging, merch, footwear details, 25-page brand guideline' },
       sections: [
         { id: 'brief', nav: 'Brief', label: 'The brief', title: 'A category most Indians had never heard of.',
           body: `<p>Barefoot shoes are thin, flexible and foot-shaped, built so you walk the way you would without them. In India they were niche, imported and explained in technical terms. Zen Barefoot needed a brand that made the idea feel natural, calm and a little bit adventurous.</p>` },
@@ -164,95 +165,136 @@
       accent: '#2f3e8f', crateLabel: 'GRADRIGHT / ED-TECH',
       cover: FR('SEGxXpZ2Q5mnmdvl7Z6nFfjV0.png', 1024),
       tags: ['Digital marketing', 'University campaigns', 'Lender campaigns', 'Motion'],
-      meta: { Role: 'Sr. Visual Designer', Timeline: 'Jun 2022 to Feb 2024', Scope: 'Social and display ads, motion, university and lender campaigns, ad research for Meta and Google', Universities: 'University of Miami, Illinois Tech, Simon Fraser University, NJIT, CUNY and more', Lenders: '13+ education lenders' },
+      meta: { Role: 'Sr. Visual Designer', Timeline: 'Jun 2022 to Feb 2024', Scope: 'Social and display ads, motion, university and lender campaigns, ad research for Meta and Google', Universities: 'University of San Diego, WashU, Rutgers, Tulane, Lehigh, University of South Dakota, University of Miami, Illinois Tech, SFU, NJIT, CUNY and more', Lenders: '13+ education lenders' },
       sections: [
         { id: 'brief', nav: 'Brief', label: 'The brief', title: 'Big decisions, sold one scroll at a time.', type: 'rally',
           body: `<p>GradRight helps Indian students find the right university (SelectRight) and the right education loan (FundRight). As a senior designer I had a major role in its digital marketing creatives, most of them made for two kinds of partners: the universities recruiting students and the lenders funding them. Alongside the design, I researched what was converting on Meta and Google, and fed it into the next round. Every ad had to make a huge, expensive decision feel exciting and possible.</p>`,
           facts: [
-            ['Universities', '5+ campaigns', 'University of Miami, Illinois Tech, Simon Fraser University, NJIT and CUNY, each with its own idea.'],
+            ['Universities', '10+', 'From the University of San Diego, WashU and Rutgers to Tulane, Lehigh, Miami, Illinois Tech, SFU, NJIT and CUNY.'],
             ['Lenders', '13+', 'Education lenders, each with its own set of loan ads for students and parents.'],
             ['Formats', 'Multi-format', 'Static and carousel ads, motion ads, webinar promos and app creatives.'],
             ['Research', 'Meta + Google', 'User and ad research into which hooks, formats and visuals converted best.']
           ] },
         { id: 'universities', nav: 'Universities', label: 'Universities', title: 'One headline, one image, one reason to tap.', type: 'gallery',
-          body: `<p>Each university got its own idea, written around the student's ambition rather than the prospectus: Miami's beaches, Illinois Tech's barcode invention, SFU's "Be heard, not herd". Program hooks did the same for MBA, Big 4 and tech careers.</p>`,
+          body: `<p>GradRight's "Masters of the Future" ads were backed by top American universities, and each partner school got its own creative. The ideas were written around the student's ambition rather than the prospectus: Miami's beaches, Illinois Tech's barcode invention, SFU's "Be heard, not herd". Program hooks did the same for MBA, Big 4 and tech careers.</p>`,
+          logos: [['usd-engineering', 'University of San Diego, Shiley-Marcos School of Engineering'], ['usd-business', 'University of San Diego, Knauss School of Business'], ['usd-online', 'University of San Diego Online'], ['washu', 'Washington University in St. Louis'], ['rutgers', 'Rutgers Business School'], ['tulane', 'Tulane University, Freeman School of Business'], ['lehigh', 'Lehigh University'], ['south-dakota', 'University of South Dakota']],
+          logosNote: 'Partner universities in the campaigns, plus Miami, Illinois Tech, SFU, NJIT and CUNY in the ads below.',
           media: [FR('XNf7m1xUyQoG9FRZ3Bts0gLAhPs.png'), FR('KwN2AT6q3am8lYQx3j2ffGBg6M.png'), FR('kMGpxkCRhKSX5Q0XAzPjyyZ834.png'), FR('pi6oO8xIQU5TZzL2bmnEFVtd5E.png'), FR('Zgaxz96z0COLl5nXSjNpaS3WdX4.png'), FR('SEGxXpZ2Q5mnmdvl7Z6nFfjV0.png'), FR('Ln1PcMfHxtZcHVRNfgxshEukI.png'), FR('uIhDWYfjMVlPzP6IYKBC22WJ7M.png'), FR('hRNCR2dfy5BltNRTFXkNpV4rV2A.png')],
           captions: ['University of Miami', 'Simon Fraser University', 'Illinois Tech', 'NJIT', 'CUNY webinar', '"What makes Elon\'s rockets fly?"', 'Fortune 500 MBA', 'Big 4 accounting', 'SelectRight app'] },
         { id: 'lenders', nav: 'Lenders', label: 'Lenders', title: '13+ lenders, one loan story each.', type: 'videos',
           body: `<p>FundRight compares education loans, so every lending partner needed creative of its own: what makes that lender's loan the right one, said simply enough for a student and convincing enough for the parent co-signing it. One system kept 13+ lenders consistent with the GradRight brand while letting each one stand apart.</p>`,
           videos: ['https://framerusercontent.com/assets/IDJ5Rd0oTADT0pSOwaW6mWIj8UQ.mp4', 'https://framerusercontent.com/assets/bVtVrzYguypr6qknS1MHCNKI.mp4', 'https://framerusercontent.com/assets/VhI6TPSKIStVJjdQXsYvgk6twR4.mp4'] }
       ],
-      ai: { title: 'A first step into AI.', body: 'An introductory layer, used with care: ChatGPT for prompt-led thinking and Adobe Firefly where it gave the strongest creative result.', steps: [['ChatGPT', 'Prompting for hooks, headline variations and creative briefs.'], ['Firefly', 'Generating and extending imagery where stock photography fell short, then finished by hand.']] },
-      impact: { stats: [['13+', 'lenders with their own campaigns'], ['5+', 'university partner campaigns'], ['65%', 'conversion lift on the pages behind the ads']] }
+      ai: { title: 'A first step into AI.', body: 'AI came into my work here at an introductory level: a faster way to explore, never the final word. ChatGPT helped me think in more directions before I opened a file, and Adobe Firefly filled the gaps that stock photography left. The craft, the brand rules and the final call stayed with me.', steps: [['Brief', 'ChatGPT turned a university or lender brief into angles worth testing: the student\'s ambition, the parent\'s question, the intake deadline.'], ['Hooks', 'Prompting for headline and hook variations, then choosing and rewriting the few that sounded like GradRight.'], ['Imagery', 'Adobe Firefly to generate and extend backgrounds and campus moods, and to rework crops for new formats where stock fell short.'], ['Finish', 'Everything came back into Photoshop and Illustrator: retouched, set on the brand grid and checked against each partner\'s guidelines.']], tools: ['ChatGPT', 'Adobe Firefly', 'Photoshop', 'Illustrator'], human: 'What stayed human: the idea behind every ad, the layout, the type, the partner brand rules and the final pick of what went live.' },
+      impact: { stats: [['13+', 'lenders with their own campaigns'], ['10+', 'university partner campaigns'], ['65%', 'conversion lift on the pages behind the ads']] }
     },
 
     /* ------------------------------------------------ SENA DIWAS (mini) */
     {
       slug: 'sena-diwas-2027', tier: 'minor', no: '05',
-      title: 'Sena Diwas 2027', client: 'Indian Army', year: '2027', status: 'Work in progress',
-      kicker: 'Event logo · Indian Army · Bhopal',
-      oneLiner: 'An Army Day emblem, built one layer at a time.',
-      summary: 'The emblem for Army Day 2027 in Bhopal: tanks, rotors and soldiers under the tricolour, with Raja Bhoj on the Upper Lake at its heart.',
+      title: 'Sena Diwas 2027', client: 'Indian Army', year: '2027', status: 'Under wraps',
+      kicker: 'Event emblem · Indian Army · Bhopal',
+      oneLiner: 'An Army Day emblem, sealed until the parade.',
+      summary: 'The official emblem for Army Day 2027 in Bhopal. It stays under wraps until the event; the full story unlocks right after.',
       accent: '#3f4a1e', crateLabel: 'SENA DIWAS / 2027',
-      cover: 'assets/sena/sena-logo.jpg',
-      tags: ['Event logo', 'Illustration', 'Print-ready'],
-      meta: { Role: 'Logo designer', Status: 'Work in progress', Client: 'Indian Army', Output: 'Logo: high-res, print-ready PDF, layered PSD (26 layers)' },
+      cover: null, coverText: 'Under<br><em>wraps</em>',
+      tags: ['Event emblem', 'Illustration', 'Print-ready'],
+      meta: { Role: 'Emblem designer', Client: 'Indian Army', Event: 'Army Day, 15 January 2027, Bhopal', Status: 'Unlocks after the event' },
       sections: [
-        { id: 'brief', nav: 'Brief', label: 'The brief', title: 'One badge for the whole Army, and for Bhopal.',
-          body: `<p>Sena Diwas (Army Day) celebrates the Indian Army every January. For 2027 the emblem had to honour every arm of the force and still belong to its host city.</p>`,
-          todo: ['Who commissioned it and where it will be used (parade, merch, social)'] },
-        { id: 'build', nav: 'The build', label: 'The build', title: 'Twenty-six layers, assembled like a parade.', type: 'sena-build',
-          body: `<p>The national emblem and crossed swords crown the shield. Tricolour drapes frame a sky of rotor and drone; armour and artillery hold the flanks; three soldiers stand at the centre. Below the Devanagari title, Raja Bhoj stands over Bhopal's Upper Lake, the city's own landmark, inside the Army's badge.</p>` },
-        { id: 'deliver', nav: 'Delivery', label: 'Delivery', title: 'Built to be printed big.',
-          body: `<p>Delivered as a 8192px master, a print-ready PDF and a fully layered PSD so every element can be animated, embroidered or reused on its own.</p>`,
-          todo: ['Final approved version + any applications (banners, merch) once released'] }
-      ],
-      ai: { title: 'Generated, then made accountable.', body: 'Illustrated elements were generated with AI, then rebuilt, corrected and composited by hand in Photoshop: equipment accuracy and insignia can\'t be left to a model.', steps: [['Generate', 'Element studies for vehicles, soldiers and drapes.'], ['Correct', 'Insignia, proportions and Devanagari type fixed by hand.'], ['Layer', 'Delivered as a 26-layer PSD.']], todo: ['Confirm the AI tools used (Midjourney / Firefly / Higgsfield?)'] },
-      impact: { stats: [['26', 'layers in the master file'], ['8192px', 'master artwork']] }
+        { id: 'locked', nav: 'Under wraps', label: 'Under wraps', title: 'Some things are worth the wait.', type: 'locked',
+          body: `<p>This emblem belongs to the parade first. It will be unveiled at Army Day 2027 in Bhopal, and the full story (the idea, the build and every layer behind it) unlocks here right after.</p>`,
+          unlock: '2027-01-15T09:00:00+05:30' }
+      ]
     },
 
     /* ------------------------------------------------ LITTLE THINGS BY SHIVANI (mini) */
     {
       slug: 'little-things-by-shivani', tier: 'minor', no: '06',
-      title: 'Little Things by Shivani', client: 'Shivani Kohli, resin artist', year: '2025',
-      kicker: 'Logo & branding refresh · Instagram brand',
-      oneLiner: 'A keepsake brand that finally looks like its keepsakes.',
-      summary: 'A logo and branding refresh for a resin-art and floral-preservation studio with 18K followers on Instagram.',
-      accent: '#c9727f', crateLabel: 'LITTLE THINGS / RESIN',
-      cover: null, coverText: 'little<br><em>things</em>',
-      tags: ['Logo refresh', 'Social branding'],
-      meta: { Role: 'Brand designer', Client: 'Shivani Kohli', Timeline: 'Nov 2025', Reach: '18K Instagram followers', Output: 'Logo refresh, brand assets' },
+      title: 'Little Things by Shivani', client: 'Shivani Kohli', year: '2025',
+      kicker: 'Brand identity · Brand guidelines · Resin art and home fragrance',
+      oneLiner: 'Started at home, by one person. Now loved by thousands.',
+      summary: 'A brand identity for a resin-art studio that Shivani built from scratch, on her own, from home. It now reaches 18K+ people on Instagram, and I was lucky to help give it a face.',
+      accent: '#B5703F', crateLabel: 'LITTLE THINGS / RESIN',
+      cover: 'assets/little/logo-stacked.webp', coverLight: true,
+      tags: ['Brand identity', 'Logo suite', 'Brand guidelines'],
+      meta: { Role: 'Brand designer', Client: 'Shivani Kohli', Timeline: 'Nov 2025', Reach: '18K+ on Instagram', Output: 'Logo suite, colour, type, brand guidelines, applications' },
       sections: [
-        { id: 'brief', nav: 'Brief', label: 'The brief', title: 'Preserved flowers, preserved memories.',
-          body: `<p>Shivani turns wedding bouquets and small mementos into resin keepsakes. Her audience had grown to 18K on Instagram; the brand needed to grow up with it: softer, more giftable, and easy to recognise in a feed.</p>`,
-          todo: ['Before/after logo', 'What was delivered (logo, colours, highlight covers, packaging stickers?)', 'Client quote: "Thank you so much for your services Arundhati 💖" can be used with permission'] }
+        { id: 'story', nav: 'Her story', label: 'Her story', title: 'It started with one person and a lot of heart.', type: 'story',
+          body: `<p>Little Things began the way the best brands do: with one person, at home, making something she loved. Shivani built it from scratch, piece by piece, all on her own.</p><p>From those beginnings it grew into a studio that thousands of people now follow, with a range that runs from resin coasters and nameplates to pooja thalis, resin tables and hand-poured candles.</p><p>When she asked me to give it an identity, it felt less like a brief and more like being trusted with something precious. Getting to be a small part of her journey is one of the luckiest things I've worked on.</p>`,
+          link: ['https://www.instagram.com/littlethingsbyshivani/', 'See Little Things on Instagram'] },
+        { id: 'mark', nav: 'The mark', label: 'The mark', title: 'Two letters, a sparkle and a flower in bloom.', type: 'gallery',
+          body: `<p>The monogram sets a tall, leaf-like <em>l</em> and <em>t</em> side by side. Where the <em>t</em> crosses, it turns into a four-point sparkle, the little bit of magic in every piece, and a single-line flower opens from the top, for the flowers so many of her pieces hold. It works stacked, side by side, or as the symbol alone.</p>`,
+          media: ['assets/little/logo-stacked.webp', 'assets/little/logo-horizontal.webp', 'assets/little/logo-symbol.webp', 'assets/little/guide-04.jpg', 'assets/little/guide-05.jpg', 'assets/little/guide-06.jpg'],
+          captions: ['Stacked logo', 'Horizontal logo', 'The symbol', 'Vertical, horizontal and symbol use', 'Colour logos', 'Colour combinations'],
+          contain: [0, 1, 2] },
+        { id: 'system', nav: 'Colour & type', label: 'Colour & type', title: 'Sage, rust and cornsilk. Soft, warm, handmade.', type: 'gallery',
+          body: `<p>A sage green leads, with a warm rusty brown and a pale cornsilk alongside: calm, earthy and giftable, never loud. A flowing script carries the headlines, an elegant serif and a clean sans do the talking, and a playful display face is kept for creative labels.</p>`,
+          media: ['assets/little/guide-07.jpg', 'assets/little/guide-08.jpg', 'assets/little/guide-09.jpg', 'assets/little/guide-10.jpg', 'assets/little/guide-11.jpg'],
+          captions: ['Brand colour', 'Primary font: WindSong', 'Secondary font: The Seasons', 'Tertiary font: Glacial Indifference', 'Creative labelling: TAN Meringue'] },
+        { id: 'world', nav: 'In the world', label: 'In the world', title: 'From a business card to a gift box.', type: 'gallery',
+          body: `<p>Out of the guidelines and into her studio: the new logo on her cards, and foil-stamped on the lid of her Diwali hampers. The same system carries through every card, screen, candle label and gift box.</p>`,
+          media: ['assets/little/use-card-cane.jpg', 'assets/little/use-card-leaves.jpg', 'assets/little/use-card-purple.jpg', 'assets/little/use-foil.jpg', 'assets/little/use-hamper.jpg', 'assets/little/guide-13.jpg', 'assets/little/guide-12.jpg', 'assets/little/guide-01.jpg'],
+          captions: ['The new logo card, on cane', 'The logo card, among leaves', 'The logo card, in sage', 'Foil-stamped on the Diwali hamper lid', 'The Diwali hamper, 2026', 'Mock-ups: cards, boxes, candles and wrap', 'Brand application', 'The brand guidelines'], tall: true },
+        { id: 'range', nav: 'The range', label: 'What she makes', title: 'Functional, elegant, and made to mean something.', type: 'checklist',
+          body: `<p>Every piece is designed to be useful, beautiful and emotionally meaningful.</p>`,
+          groups: [
+            ['Functional resin art', ['Coasters, trays and nameplates', 'Resin tables and wall clocks', 'Pooja thalis and resin or wooden frames, personalised', 'Bookmarks, trinket trays and tea light holders', 'Monogram lamps and cake stands']],
+            ['Home fragrance', ['Wax tablets', 'Hand-poured soy candles (coming soon)', 'Wax melts (coming soon)']],
+            ['Delivered', ['Logo suite: stacked, horizontal, symbol', 'Colour palette and combinations', 'Typography system', 'Brand guidelines', 'Applications and mock-ups']]
+          ] }
       ],
-      ai: { title: 'Small brand, smart tools.', body: 'AI mockups let the client see the new mark on real products before committing.', steps: [['Mockup', 'Logo previewed on resin pieces and packaging.']], todo: ['Confirm AI use or rename to "Process"'] },
-      impact: { stats: [['18K', 'Instagram followers']], todo: ['Any change after the refresh (engagement, orders)'] }
+      impact: { stats: [['18K+', 'people following her on Instagram'], ['1', 'person who started it all, at home']] }
     },
 
     /* ------------------------------------------------ TREND BOOK (mini) */
     {
       slug: 'trend-book', tier: 'minor', no: '07',
-      title: 'Trend Book', client: 'Research project (with Spandita Jakhar)', year: '2021',
-      kicker: 'Trend forecasting · Cultural research · Editorial',
+      title: 'Trendbook 2021', client: 'NIFT, Master of Design', year: '2021',
+      kicker: 'Trend forecasting · Cultural research · Editorial design',
       oneLiner: 'Three futures, decoded before they arrived.',
-      summary: 'A forecasting study distilled into three macro-trends (Escapient, Culture Core and Metro-ceptive) with palettes, textures and scenarios.',
-      accent: '#A2772E', crateLabel: 'TREND BOOK / RESEARCH',
-      cover: 'https://framerusercontent.com/images/C5m58pQ6FKpLfvtPl7OFnKzQDI.png?scale-down-to=1024',
+      summary: 'A trend report made at NIFT\'s Master of Design programme. We gathered the disruptions people lived through over a couple of years, dug for the uncommon ones, and shaped them into three macro-trends (Escapient, Culture Core and Metro-ceptive), each mapped with its micro-trends, drivers, innovators and action points.',
+      accent: '#E3A24A', crateLabel: 'TRENDBOOK / 2021',
+      cover: null, bookCover: true, bookImg: 'assets/trend/page-01.jpg',
       tags: ['Trend forecasting', 'Research', 'Editorial design'],
-      meta: { Role: 'Trend researcher & visual designer', Timeline: '6–8 weeks', Scope: 'Cultural research, semiotics, visual strategy, editorial', Team: 'With Spandita Jakhar', Output: 'Trend book' },
+      meta: { Role: 'Trend researcher & visual designer', Institute: 'National Institute of Fashion Technology, Department of Master of Design', Team: 'Abhimanyu Arya, Apurvaa Malik, Arundhati Mitra, Sharad Singh, Spandita Jakhar', Tools: 'Figma, Photoshop', Output: 'A 37-page trend book' },
       sections: [
-        { id: 'brief', nav: 'Brief', label: 'The study', title: 'Not what\'s changing. Why.',
-          body: `<p>Broad cultural scanning became a full forecasting study: semiotic research, mood exploration and visual mapping of consumer mindsets, material innovation and digital behaviour, distilled into three stories.</p>`,
-          todo: ['Your specific part in the study vs. Spandita\'s', 'Year and institute (NIFT?)'] },
-        { id: 'stories', nav: 'Three stories', label: 'Three stories', title: 'Escapient. Culture Core. Metro-ceptive.', type: 'gallery',
-          media: ['https://framerusercontent.com/images/C5m58pQ6FKpLfvtPl7OFnKzQDI.png?scale-down-to=1024', 'https://framerusercontent.com/images/netfBd2W5NVq6gBHYnEtlGZNyJs.png?scale-down-to=1024', 'https://framerusercontent.com/images/OWB6lkC1qmEUmXpYDxQfm6d8.png?scale-down-to=1024'],
-          captions: ['Escapient', 'Culture Core', 'Metro-ceptive'],
-          todo: ['Replace with your own exports of the book spreads'] }
+        { id: 'book', nav: 'The book', label: 'The book', title: 'Open the book.', type: 'flipbook',
+          body: `<p>All 37 pages, as they were designed. Turn them with the arrows, a tap on the page or your keyboard, jump to a chapter, or use the magnifier to read a page up close.</p>`,
+          leaves: Array.from({ length: 19 }, (_, i) => ({ front: { img: TB(2 * i + 1) }, back: 2 * i + 2 <= 37 ? { img: TB(2 * i + 2) } : { kind: 'endpaper' } })),
+          chapters: [['The method', 1], ['Escapient', 6], ['Culture Core', 9], ['Metro-ceptive', 12], ['Annexure', 15], ['Thank you', 18]] },
+        { id: 'method', nav: 'The method', label: 'The method', title: 'How a disruption becomes a trend.', type: 'rally',
+          body: `<p>The report collects the disruptions people lived through in the past couple of years, then digs for the uncommon ones: the trends that quietly changed society. We worked with intersectional thinking, reading behaviours, industries and beliefs together, and asked set questions at every stage, from what caught our interest to how to prove a disruption is really a trend.</p><p>Naming mattered as much as finding. Like a dog and a cat making a "dogat", a trend is only valuable when ideas combine into something meaningful. That takes five mindsets: seeing similarities instead of differences, exploring the unfamiliar, being persuadable, staying thoughtful and observant, and purposely looking away from the goal.</p>`,
+          facts: [
+            ['Gather', 'PESTEL', 'Latest developments, monitored with frameworks like PESTEL and STEEPLE.'],
+            ['Hunt', 'Signals', 'Trends found as they surface, with a mix of intuition and research.'],
+            ['Cluster', 'Themes', 'Signals curated into clusters, then lifted into broader themes.'],
+            ['Prove', 'Proof', 'Facts and stories validated without bias, then named.']
+          ] },
+        { id: 'trends', nav: 'Three trends', label: 'Three trends', title: 'Three futures.', type: 'trends',
+          body: `<p>Each macro-trend comes with its micro-trends, the forces driving it, the people already living it, and action points on surface and material for designers.</p>`,
+          trends: [
+            { name: 'Escapient', line: 'Escaping with intent', img: TB(12), to: 6, micro: ['Reject hustle culture', 'Poly productivity', 'Rest centred'],
+              drivers: 'Different work environments, educational background, the need for self-discovery, extreme emotional events, social media', seen: 'Ritual superfoods, Prakti, Mumbai Noise by Byredo, Musely' },
+            { name: 'Culture Core', line: 'Asian community\'s cultural power', img: TB(18), to: 9, micro: ['Culture collaboration', 'Repurpose', 'Made to order'],
+              drivers: 'Mythology, culture, stories, content, social media', seen: 'Squid Game, Rupi Kaur, cultural representation in Marvel, H&M × Sabyasachi' },
+            { name: 'Metro-ceptive', line: 'The senses, simulated', img: TB(24), to: 12, micro: ['Simulated reality', 'Immersive installation', 'NFT auctions'],
+              drivers: 'The internet, electronic devices, pollution and hygiene, UI and UX know-how', seen: 'Multisensory feedback, digital presence, space-sensing systems, friendly design', seenLabel: 'Innovations' }
+          ] },
+        { id: 'annexure', nav: 'Annexure', label: 'Annexure', title: 'The research behind it.', type: 'gallery',
+          body: `<p>The annexure keeps the evidence: research boards for the smaller trends we tracked on the way, like Beauling Relaxation, Fidinnovity and Hyspacemotion, each built from articles, products and campaigns.</p>`,
+          media: [TB(31), TB(33), TB(35), TB(32), TB(34), TB(36)], contain: [0, 1, 2, 3, 4, 5],
+          captions: ['Beauling Relaxation', 'Fidinnovity', 'Hyspacemotion', 'Beauling Relaxation: research', 'Fidinnovity: research', 'Hyspacemotion: research'] },
+        { id: 'team', nav: 'The team', label: 'The team', title: 'Made by five.', type: 'team',
+          body: `<p>Researched, written and designed together as one batch of the Master of Design programme at NIFT.</p>`,
+          people: [
+            ['Abhimanyu Arya', null, 'https://www.linkedin.com/in/abhimanyu-arya-72373b146', 'LinkedIn'],
+            ['Apurvaa Malik', 'assets/trend/team-apurvaa.jpg', 'https://www.behance.net/apurvaa-malik', 'Behance'],
+            ['Arundhati Mitra', 'assets/trend/team-arundhati.jpg', 'https://www.linkedin.com/in/arundhati-mitra-07', 'LinkedIn', true],
+            ['Sharad Singh', null, 'https://www.behance.net/sharadsingh4', 'Behance'],
+            ['Spandita Jakhar', 'assets/trend/team-spandita.jpg', 'https://www.linkedin.com/in/spandita-jakhar/', 'LinkedIn']
+          ] }
       ],
-      ai: { title: 'Forecasting, then and now.', body: 'This study was built by hand. Today I would run the signal-scanning stage through AI research tools and keep the synthesis human.', steps: [['Then', 'Manual scanning, semiotic mapping, mood boards.'], ['Now', 'AI-assisted scanning; human synthesis and visual storytelling.']] },
-      impact: { stats: [['3', 'macro-trends'], ['6–8', 'weeks of research']] }
+      impact: { stats: [['3', 'macro-trends'], ['9', 'micro-trends'], ['37', 'pages, researched and designed']] }
     }
   ];
 
