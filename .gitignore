@@ -1,0 +1,8 @@
+# Not part of the published site
+assets/raw/
+_archive-fish-v1/
+tools/
+dist/
+.claude/
+CHECKLIST.md
+.DS_Store
