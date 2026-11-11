@@ -328,6 +328,7 @@
     if (state.items.length >= MAX) { showHint('That’s plenty. Peel one off to add another.'); return null; }
     const it = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 5), k, zone: hit.zone, u: +hit.u.toFixed(3), v: +hit.v.toFixed(3), r: Math.round(Math.random() * 30 - 15), s: 1 };
     state.items.push(it); placeEl(it, true); save(); select(it);
+    countUse();
     return it;
   }
   function removeSticker(it) {
@@ -622,12 +623,40 @@
   }
   window.DLSNL.exportCard = exportCard; // handy for testing the download
   window.DLSNL.exportWallpaper = exportWallpaper;
+  /* ---- a quiet, anonymous tally of everyone who styles the face ----
+     One count per visit, the first time someone places a sticker or downloads.
+     Kept on Abacus, a free public counter (no names, nothing personal). Local previews use a test key. */
+  function countUse() {
+    if (countUse.done) return; countUse.done = true;
+    tallyFetch('hit').then((n) => { if (n) showTally(n, true); });
+  }
+  const TALLY_KEY = /^(localhost|127\.|192\.168\.|10\.)/.test(location.hostname) || location.protocol === 'file:' ? 'sticker-uses-dev' : 'sticker-uses';
+  const tally = $('#faceTally'), tallyText = $('#faceTallyText');
+  const ordinal = (n) => { const t = n % 100, o = n % 10; return n + (t > 10 && t < 14 ? 'th' : o === 1 ? 'st' : o === 2 ? 'nd' : o === 3 ? 'rd' : 'th'); };
+  const tallyNum = (n) => n.toLocaleString('en-IN');
+  async function tallyFetch(kind) {
+    try {
+      const r = await fetch(`https://abacus.jasoncameron.dev/${kind}/dsloth-studio/${TALLY_KEY}`, { signal: AbortSignal.timeout ? AbortSignal.timeout(8000) : undefined });
+      if (r.status === 404) return 0;
+      const j = await r.json(); return typeof j.value === 'number' ? j.value : null;
+    } catch (e) { return null; }
+  }
+  function showTally(n, you) {
+    if (n === null || !tally) return;
+    tally.hidden = false; tally.classList.toggle('is-you', !!you);
+    tallyText.innerHTML = you ? `You’re the <b>${ordinal(n)}</b> person to style this face.`
+      : n ? `Styled by <b>${tallyNum(n)}</b> ${n === 1 ? 'person' : 'people'} so far.` : 'Be the first to style this face.';
+  }
+  // load the count once the section is near, so it costs nothing for people who never scroll there
+  if (tally) new IntersectionObserver(([e], o) => { if (!e.isIntersecting) return; o.disconnect(); if (!countUse.done) tallyFetch('get').then((n) => { if (!countUse.done) showTally(n, false); }); }, { rootMargin: '300px 0px' }).observe(tally.parentElement);
+
   const keep = $('#keep'), keepWord = $('#keepWord'), keepHint = $('#keepHint');
   keepWord.addEventListener('input', () => { keepWord.value = keepWord.value.replace(/[^A-Za-z]/g, '').slice(0, 10); });
   keep.addEventListener('submit', async (e) => {
     e.preventDefault();
     const word = keepWord.value.trim();
     const btn = keep.querySelector('button'); btn.disabled = true; btn.textContent = 'Making…';
+    countUse();
     try {
       const cv = await exportWallpaper(word);
       const blob = await new Promise((res) => cv.toBlob(res, 'image/png'));

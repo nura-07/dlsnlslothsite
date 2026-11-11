@@ -963,3 +963,13 @@ main > section { position: relative; z-index: 2; }
 
 /* résumé button beside "Where I've worked" */
 .me__cv { justify-self: start; margin-top: 14px; white-space: nowrap; border: 1px solid var(--line-2); }
+
+/* a quiet tally of everyone who has styled the face */
+.face__tally { margin: 18px 0 0; display: flex; align-items: center; gap: 9px; font-size: var(--t-xs); color: var(--mute); font-variant-numeric: tabular-nums; }
+.face__tally[hidden] { display: none; }
+.face__tally i { width: 8px; height: 8px; flex: none; background: var(--iri); -webkit-mask: var(--star-mask) center / contain no-repeat; mask: var(--star-mask) center / contain no-repeat; animation: spin 8s linear infinite; }
+.face__tally b { font-weight: 400; color: var(--lilac); }
+.face__tally.is-you span { animation: tallyIn .7s var(--ease) both; }
+@keyframes tallyIn { from { opacity: 0; transform: translateY(6px); filter: blur(4px); } }
+@media (max-width: 760px) { .face__copy .face__tally { order: 7; margin-top: 4px; } }
+@media (prefers-reduced-motion: reduce) { .face__tally i, .face__tally.is-you span { animation: none; } }
